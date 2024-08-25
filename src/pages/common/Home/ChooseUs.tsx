@@ -2,8 +2,6 @@ import { FaHandHoldingDollar } from "react-icons/fa6";
 import { FaUserCheck } from "react-icons/fa";
 import { IoTime } from "react-icons/io5";
 
-
-
 const ChooseUs = () => {
     return (
         <div className="min-h-screen w-full flex flex-col md:flex-row md:gap-4 lg:gap-8">
@@ -28,7 +26,9 @@ const ChooseUs = () => {
                                 <FaHandHoldingDollar className="size-8 text-red-500 " />
                             </div>
                             <div>
-                                <h1 className="text-lg font-semibold">Best price guaranteed</h1>
+                                <h1 className="text-lg font-semibold">
+                                    Best price guaranteed
+                                </h1>
                                 <p className="text-[#6D6D6D] w-5/6 lg:w-3/4 mt-2">
                                     Find a lower price? We’ll refund you 100% of
                                     the difference.
@@ -40,10 +40,12 @@ const ChooseUs = () => {
                                 <FaUserCheck className="size-8 text-red-500 " />
                             </div>
                             <div>
-                                <h1 className="text-lg font-semibold">Experience driver</h1>
+                                <h1 className="text-lg font-semibold">
+                                    Experience driver
+                                </h1>
                                 <p className="text-[#6D6D6D] w-5/6 lg:w-3/4 mt-2">
-                                Don’t have driver? Don’t worry, we have many
-                                experienced driver for you.
+                                    Don’t have driver? Don’t worry, we have many
+                                    experienced driver for you.
                                 </p>
                             </div>
                         </div>
@@ -52,9 +54,12 @@ const ChooseUs = () => {
                                 <IoTime className="size-8 text-red-500 " />
                             </div>
                             <div>
-                                <h1 className="text-lg font-semibold">24 hour services</h1>
+                                <h1 className="text-lg font-semibold">
+                                    24 hour services
+                                </h1>
                                 <p className="text-[#6D6D6D] w-5/6 lg:w-3/4 mt-2">
-                                Book your car anytime and we will make sure your safe ride to your direction.
+                                    Book your car anytime and we will make sure
+                                    your safe ride to your direction.
                                 </p>
                             </div>
                         </div>

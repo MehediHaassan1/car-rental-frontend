@@ -7,15 +7,16 @@ const FeaturedCar = () => {
     return (
         <div className="custom-container w-full min-h-screen my-10">
             <div className="text-center">
-                <h2 className="text-3xl md:text-4xl font-semibold mb-4">
-                    Recommended <span className="text-red-500">Cars</span>
-                </h2>
-                <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-                    Discover the ultimate combination of performance and comfort
-                    with our top-rated vehicles, designed with cutting-edge
-                    technology, sleek aesthetics, and outstanding fuel
-                    efficiency.
-                </p>
+                <div className="w-full">
+                    <div className="w-full flex items-center justify-center">
+                        <p className="bg-red-100 uppercase w-fit rounded px-10 py-2 text-md font-semibold text-red-500 text-center">
+                            POPULAR RENTAL DEALS
+                        </p>
+                    </div>
+                    <h1 className="text-4xl font-semibold my-6">
+                        Most popular cars rental deals
+                    </h1>
+                </div>
 
                 <div className="flex flex-wrap m-3">
                     <div className="w-full sm:w-1/2 md:w-1/3 flex flex-col md:p-2 lg:p-2">
@@ -153,8 +154,8 @@ const FeaturedCar = () => {
                 </div>
 
                 <div className="mt-8 flex items-center justify-center">
-                    <button className="bg-red-600 px-8 py-3 rounded text-red-100 hover:bg-red-500 transition duration-300 flex items-center gap-2 group">
-                        See More{" "}
+                    <button className="bg-red-600 px-8 py-3 rounded text-red-100 hover:bg-red-700 transition duration-300 flex items-center gap-2 group">
+                        Show all vehicles
                         <span>
                             <FaArrowRight className="group-hover:rotate-0 transition-all lg:-rotate-[30deg] text-xl" />
                         </span>
@@ -166,17 +167,3 @@ const FeaturedCar = () => {
 };
 
 export default FeaturedCar;
-
-/* 
-
-
-Prince
-Prince Rubel
-testimonial import React from "react";
-
-
-
-const Testimonial = () => 
-
-export default Testimonial;
-*/
