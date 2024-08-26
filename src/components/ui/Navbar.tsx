@@ -4,9 +4,11 @@ import { Link, useLocation } from "react-router-dom";
 
 const Links = [
     { path: "/", name: "home" },
+    {path: '/rent-car', name: 'rent car'},
+    {path: '/car', name: 'car'},
     { path: "/about-us", name: "about us" },
     { path: "/booking", name: "booking" },
-    { path: "/contact", name: "Contact Us" },
+    { path: "/contact", name: "contact us" },
 ];
 
 const items: MenuProps["items"] = [
