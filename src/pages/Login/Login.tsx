@@ -4,6 +4,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useState } from "react";
 import { Divider } from "antd";
+import { useLoginUserMutation } from "../../redux/features/auth/authApi";
+import { useAppDispatch } from "../../redux/hook";
+import { setUser } from "../../redux/features/auth/authSlice";
 
 type TLogin = {
     email: string;
@@ -16,11 +19,22 @@ const Login = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<TLogin>();
-
+    const [loginUser] = useLoginUserMutation();
+    const dispatch = useAppDispatch();
     const [showPassword, setShowPassword] = useState(false);
 
-    const onSubmit: SubmitHandler<TLogin> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<TLogin> = async (data) => {
+        try {
+            const res = await loginUser(data);
+            console.log(res);
+            if (res.data.success) {
+                dispatch(
+                    setUser({ user: res?.data.data, token: res?.data.token })
+                );
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -55,7 +69,8 @@ const Login = () => {
                                             {...register("email", {
                                                 required: {
                                                     value: true,
-                                                    message: "Required",
+                                                    message:
+                                                        "Email is required",
                                                 },
                                                 pattern: {
                                                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -100,7 +115,8 @@ const Login = () => {
                                                 {...register("password", {
                                                     required: {
                                                         value: true,
-                                                        message: "Required",
+                                                        message:
+                                                            "Password is required",
                                                     },
                                                     minLength: {
                                                         value: 6,
@@ -159,7 +175,7 @@ const Login = () => {
 
                                     <button
                                         type="submit"
-                                        className="w-full block bg-red-500 hover:bg-red-600 focus:bg-orange-500 text-white font-semibold rounded
+                                        className="w-full block bg-red-500 hover:bg-red-600 focus:bg-red-500 text-white font-semibold rounded
                 px-4 py-3 mt-6 duration-300"
                                     >
                                         Log In

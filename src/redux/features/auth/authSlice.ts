@@ -1,6 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { RootState } from '../../store'
-
 
 export type TUser = {
   userId: string;
@@ -10,7 +8,7 @@ export type TUser = {
 };
 
 type TAuthState = {
-  user: null | TUser;
+  user: null | object;
   token: null | string;
 };
 
@@ -32,7 +30,4 @@ export const authSlice = createSlice({
 })
 
 export const { setUser } = authSlice.actions
-
-export const selectCount = (state: RootState) => state.counter.value
-
 export default authSlice.reducer

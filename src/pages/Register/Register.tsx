@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Divider } from "antd";
 import { useCreateUserMutation } from "../../redux/features/auth/authApi";
+import Swal from "sweetalert2";
 
 type TRegister = {
     email: string;
@@ -24,6 +26,7 @@ const Register = () => {
 
     const [showPassword, setShowPassword] = useState(false);
     const [disable, setDisable] = useState(true);
+    const navigate = useNavigate();
 
     const [createUser] = useCreateUserMutation();
 
@@ -49,9 +52,22 @@ const Register = () => {
         };
         try {
             const res = await createUser(userData);
-            console.log(res.res);
-        } catch (error) {
-            console.log(error);
+            if (res.data.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "User create successfully",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                navigate("/login");
+            }
+        } catch (error: any) {
+            Swal.fire({
+                icon: "error",
+                title: error.message || "User create successfully",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         }
 
         console.log(userData);
@@ -91,7 +107,8 @@ const Register = () => {
                                             {...register("firstName", {
                                                 required: {
                                                     value: true,
-                                                    message: "Required",
+                                                    message:
+                                                        "First name required",
                                                 },
                                             })}
                                             style={
@@ -127,7 +144,8 @@ const Register = () => {
                                             {...register("lastName", {
                                                 required: {
                                                     value: true,
-                                                    message: "Required",
+                                                    message:
+                                                        "Last name is required",
                                                 },
                                             })}
                                             style={
@@ -164,7 +182,8 @@ const Register = () => {
                                         {...register("phoneNumber", {
                                             required: {
                                                 value: true,
-                                                message: "Required",
+                                                message:
+                                                    "Phone number is required",
                                             },
                                             pattern: {
                                                 value: /^[0-9]+$/,
@@ -206,7 +225,7 @@ const Register = () => {
                                         {...register("email", {
                                             required: {
                                                 value: true,
-                                                message: "Required",
+                                                message: "Email is required",
                                             },
                                             pattern: {
                                                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -249,7 +268,8 @@ const Register = () => {
                                             {...register("password", {
                                                 required: {
                                                     value: true,
-                                                    message: "Required",
+                                                    message:
+                                                        "Password is required",
                                                 },
                                                 pattern: {
                                                     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/,
@@ -308,7 +328,13 @@ const Register = () => {
                                             }
                                             placeholder="Password"
                                             className="input input-bordered w-full focus:outline-none rounded h-10 border border-gray-900 mt-2 pl-2"
-                                            {...register("confirmPassword")}
+                                            {...register("confirmPassword", {
+                                                required: {
+                                                    value: true,
+                                                    message:
+                                                        "Confirm Password is required",
+                                                },
+                                            })}
                                         />
                                         <div
                                             onClick={() =>
