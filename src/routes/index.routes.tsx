@@ -5,6 +5,8 @@ import AboutUs from "../pages/About/About";
 import Cars from "../pages/Cars/Cars";
 import CarDetails from "../pages/Cars/CarDetails";
 import NotFound from "../components/ui/NotFound";
+import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
             {
                 path: "/car",
                 element: <CarDetails />,
+            },
+            {
+                path: "/login",
+                element: <Login />,
+            },
+            {
+                path: "register",
+                element: <Register />,
             },
             {
                 path: "*",
