@@ -1,3 +1,4 @@
+import BookingProcess from "./BookingProcess";
 import ChooseUs from "./ChooseUs";
 import FeaturedCar from "./FeaturedCars";
 import Hero from "./Hero";
@@ -7,6 +8,7 @@ const Home = () => {
     return (
         <div>
             <Hero />
+            <BookingProcess />
             <FeaturedCar />
             <ChooseUs />
             <Testimonial />
