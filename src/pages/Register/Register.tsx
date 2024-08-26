@@ -4,6 +4,7 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Divider } from "antd";
+import { useCreateUserMutation } from "../../redux/features/auth/authApi";
 
 type TRegister = {
     email: string;
@@ -20,12 +21,40 @@ const Register = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<TRegister>();
-    
+
     const [showPassword, setShowPassword] = useState(false);
     const [disable, setDisable] = useState(true);
 
-    const onSubmit: SubmitHandler<TRegister> = (data) => {
-        console.log(data);
+    const [createUser] = useCreateUserMutation();
+
+    const onSubmit: SubmitHandler<TRegister> = async (data) => {
+        const {
+            firstName,
+            lastName,
+            email,
+            confirmPassword,
+            password,
+            phoneNumber,
+        } = data;
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+
+        const userData = {
+            name: firstName + " " + lastName,
+            email,
+            password,
+            phone: phoneNumber,
+        };
+        try {
+            const res = await createUser(userData);
+            console.log(res.res);
+        } catch (error) {
+            console.log(error);
+        }
+
+        console.log(userData);
     };
 
     return (
