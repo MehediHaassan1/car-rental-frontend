@@ -3,6 +3,8 @@ import MainLayouts from "../components/layouts/MainLayouts";
 import Home from "../pages/Home/Home";
 import AboutUs from "../pages/About/About";
 import Cars from "../pages/Cars/Cars";
+import CarDetails from "../pages/Cars/CarDetails";
+import NotFound from "../components/ui/NotFound";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
             {
                 path: "/rent-car",
                 element: <Cars />,
+            },
+            {
+                path: "/car",
+                element: <CarDetails />,
+            },
+            {
+                path: "*",
+                element: <NotFound />,
             },
         ],
     },

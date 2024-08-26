@@ -3,7 +3,7 @@ import { FaInstagram, FaCar } from "react-icons/fa6";
 import { BsArrowRight } from "react-icons/bs";
 import { BiSolidDollarCircle } from "react-icons/bi";
 import { MdAddCall } from "react-icons/md";
-
+import CompanyHistory from "./CompanyHistory";
 const AboutUs = () => {
     return (
         <div>
@@ -118,6 +118,8 @@ const AboutUs = () => {
                     </div>
                 </div>
             </div>
+
+            <CompanyHistory />
 
             {/* Meet our Team */}
             <section className="bg-white text-center custom-container mt-10">

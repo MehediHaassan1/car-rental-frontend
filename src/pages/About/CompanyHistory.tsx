@@ -1,103 +1,137 @@
-import { useState } from "react";
+import {
+    VerticalTimeline,
+    VerticalTimelineElement,
+} from "react-vertical-timeline-component";
+import "react-vertical-timeline-component/style.min.css";
+import { SiLinuxfoundation } from "react-icons/si";
+import { BiExpand } from "react-icons/bi";
+import { TbBrandBooking } from "react-icons/tb";
+import { FaGlobeAsia } from "react-icons/fa";
 
 const CompanyHistory = () => {
-    const [hoveredItem, setHoveredItem] = useState<number | null>(null);
-
     return (
-        <section className="bg-gray-100 py-16">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                        Our Journey
-                    </h2>
-                    {/* <p className="text-lg text-gray-600">
-                        From humble beginnings to becoming a leader in car
-                        rentals, discover our story and the milestones that
-                        shaped us.
-                    </p> */}
-                </div>
-
-                <div className="relative">
-                    {/* <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-full max-w-4xl h-px bg-gray-300"></div>
-                    </div> */}
-                    <div className="relative space-y-12">
-                        {historyData.map((item, index) => (
-                            <div
-                                key={index}
-                                className={`transition-transform duration-500 transform ${
-                                    hoveredItem === index
-                                        ? "scale-105"
-                                        : "scale-100"
-                                }`}
-                                onMouseEnter={() => setHoveredItem(index)}
-                                onMouseLeave={() => setHoveredItem(null)}
-                            >
-                                <div className="flex flex-col items-center sm:flex-row sm:items-start">
-                                    <div
-                                        className="w-12 h-12 bg-red-500 text-white flex items-center justify-center rounded-full shadow-lg mb-4 sm:mb-0"
-                                        style={{ transition: "transform 0.3s" }}
-                                    >
-                                        <span className="text-xl font-bold">
-                                            {item.year}
-                                        </span>
-                                    </div>
-                                    <div className="ml-0 sm:ml-6 text-center sm:text-left">
-                                        <h3 className="text-xl font-semibold text-gray-900">
-                                            {item.title}
-                                        </h3>
-                                        <p className="text-gray-700 mt-2">
-                                            {item.description}
-                                        </p>
-                                    </div>
-                                </div>
-                                {index < historyData.length - 1 && (
-                                    <div className="relative mt-8">
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className="w-full max-w-4xl h-px bg-gray-300"></div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
+        <>
+            <VerticalTimeline>
+                <VerticalTimelineElement
+                    className="vertical-timeline-element--work"
+                    contentStyle={{
+                        background: "rgb(254 202 202)",
+                        color: "rgb(185 28 28)",
+                    }}
+                    contentArrowStyle={{
+                        borderRight: "7px solid  rgb(185 28 28)",
+                    }}
+                    date="2000"
+                    iconStyle={{
+                        background: "rgb(185 28 28)",
+                        color: "#fff",
+                    }}
+                    icon={<SiLinuxfoundation />}
+                >
+                    <h3 className="vertical-timeline-element-title text-xl font-bold pb-4">
+                        Foundation
+                    </h3>
+                    <h4 className="vertical-timeline-element-subtitle">
+                        We started with a small fleet of vehicles and a
+                        commitment to providing excellent customer service.
+                    </h4>
+                </VerticalTimelineElement>
+                <VerticalTimelineElement
+                    className="vertical-timeline-element--work"
+                    date="2005"
+                    contentArrowStyle={{
+                        borderRight: "7px solid  rgb(185 28 28)",
+                    }}
+                    iconStyle={{
+                        background: "rgb(185 28 28)",
+                        color: "#fff",
+                    }}
+                    contentStyle={{
+                        background: "rgb(254 202 202)",
+                        color: "rgb(185 28 28)",
+                    }}
+                    icon={<BiExpand />}
+                >
+                    <h3 className="vertical-timeline-element-title text-xl font-bold pb-4">
+                        Expand
+                    </h3>
+                    <h4 className="vertical-timeline-element-subtitle">
+                        Expanded our fleet and began offering a wider range of
+                        vehicles to meet growing customer demands.
+                    </h4>
+                </VerticalTimelineElement>
+                <VerticalTimelineElement
+                    className="vertical-timeline-element--work"
+                    contentStyle={{
+                        background: "rgb(254 202 202)",
+                        color: "rgb(185 28 28)",
+                    }}
+                    contentArrowStyle={{
+                        borderRight: "7px solid  rgb(185 28 28)",
+                    }}
+                    date="2010"
+                    iconStyle={{
+                        background: "rgb(185 28 28)",
+                        color: "#fff",
+                    }}
+                    icon={<TbBrandBooking />}
+                >
+                    <h3 className="vertical-timeline-element-title text-xl font-bold pb-4">
+                    Online Booking
+                    </h3>
+                    <h4 className="vertical-timeline-element-subtitle">
+                    Launched our online booking system, making it easier than ever for customers to rent vehicles from anywhere.
+                    </h4>
+                </VerticalTimelineElement>
+                <VerticalTimelineElement
+                    className="vertical-timeline-element--work"
+                    date="2015"
+                    contentArrowStyle={{
+                        borderRight: "7px solid  rgb(185 28 28)",
+                    }}
+                    iconStyle={{
+                        background: "rgb(185 28 28)",
+                        color: "#fff",
+                    }}
+                    contentStyle={{
+                        background: "rgb(254 202 202)",
+                        color: "rgb(185 28 28)",
+                    }}
+                    icon={<FaGlobeAsia />}
+                >
+                    <h3 className="vertical-timeline-element-title text-xl font-bold pb-4">
+                    Nationwide Coverage
+                    </h3>
+                    <h4 className="vertical-timeline-element-subtitle">
+                    Extended our services nationwide, offering convenient pick-up and drop-off locations across the country.
+                    </h4>
+                </VerticalTimelineElement>
+                <VerticalTimelineElement
+                    className="vertical-timeline-element--work"
+                    contentStyle={{
+                        background: "rgb(254 202 202)",
+                        color: "rgb(185 28 28)",
+                    }}
+                    contentArrowStyle={{
+                        borderRight: "7px solid  rgb(185 28 28)",
+                    }}
+                    date="2020 - Present"
+                    iconStyle={{
+                        background: "rgb(185 28 28)",
+                        color: "#fff",
+                    }}
+                    icon={<TbBrandBooking />}
+                >
+                    <h3 className="vertical-timeline-element-title text-xl font-bold pb-4">
+                    Sustainability
+                    </h3>
+                    <h4 className="vertical-timeline-element-subtitle">
+                    Introduced eco-friendly vehicles into our fleet and implemented green practices to reduce our carbon footprint.
+                    </h4>
+                </VerticalTimelineElement>
+            </VerticalTimeline>
+        </>
     );
 };
-
-const historyData = [
-    {
-        year: "2000",
-        title: "Foundation",
-        description:
-            "We started with a small fleet of vehicles and a commitment to providing excellent customer service.",
-    },
-    {
-        year: "2005",
-        title: "Foundation",
-        description:
-            "Expanded our fleet and began offering a wider range of vehicles to meet growing customer demands.",
-    },
-    {
-        year: "2010",
-        title: "Online Booking",
-        description:
-            "Launched our online booking system, making it easier than ever for customers to rent vehicles from anywhere.",
-    },
-    {
-        year: "2015",
-        title: "Nationwide Coverage",
-        description:
-            "Extended our services nationwide, offering convenient pick-up and drop-off locations across the country.",
-    },
-    {
-        year: "2020",
-        title: "Sustainability",
-        description:
-            "Introduced eco-friendly vehicles into our fleet and implemented green practices to reduce our carbon footprint.",
-    },
-];
 
 export default CompanyHistory;
