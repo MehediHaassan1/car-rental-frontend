@@ -2,54 +2,9 @@ import { Avatar, Button, Dropdown, MenuProps } from "antd";
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
+import { removeUser } from "../../redux/features/auth/authSlice";
 
-const Links = [
-    { path: "/", name: "home" },
-    { path: "/rent-car", name: "rent car" },
-    { path: "/car", name: "car" },
-    { path: "/about-us", name: "about us" },
-    { path: "/booking", name: "booking" },
-    { path: "/contact", name: "contact us" },
-];
-
-const items: MenuProps["items"] = [
-    {
-        key: "1",
-        label: (
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.antgroup.com"
-            >
-                1st menu item
-            </a>
-        ),
-    },
-    {
-        key: "2",
-        label: (
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.aliyun.com"
-            >
-                2nd menu item
-            </a>
-        ),
-    },
-    {
-        key: "3",
-        label: (
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://www.luohanacademy.com"
-            >
-                3rd menu item
-            </a>
-        ),
-    },
-];
 
 const NavBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -63,7 +18,37 @@ const NavBar = () => {
         setIsSidebarOpen(false);
     };
 
-    const user = false;
+    // const {user} = useSelector
+    const { user } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
+
+    const handleLogOut = () => {
+        dispatch(removeUser());
+    };
+
+    const items: MenuProps["items"] = [
+        {
+            key: "1",
+            label: <Link to="/dashboard">Dashboard</Link>,
+        },
+        {
+            key: "2",
+            label: <button>Profile</button>,
+        },
+        {
+            key: "3",
+            label: <button onClick={handleLogOut}>Logout</button>,
+        },
+    ];
+
+    const Links = [
+        { path: "/", name: "home" },
+        { path: "/rent-car", name: "rent car" },
+        { path: "/car", name: "car" },
+        { path: "/about-us", name: "about us" },
+        { path: "/booking", name: "booking" },
+        { path: "/contact", name: "contact us" },
+    ];
 
     return (
         <nav>
@@ -114,13 +99,24 @@ const NavBar = () => {
                                         size={48}
                                         icon={<FaUser />}
                                         className="rounded-full h-10 w-10"
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                        }}
                                     />
                                 </Button>
                             </Dropdown>
                         ) : (
                             <div className="lg:block md:block hidden">
                                 <div className="flex items-center font-medium">
-                                    <Link to="/login">Login</Link>
+                                    <Link
+                                        to="/login"
+                                        className="w-full block bg-red-500 hover:bg-red-600 focus:bg-red-500 text-white font-semibold rounded
+                px-4 py-2 duration-300"
+                                    >
+                                        Login
+                                    </Link>
                                 </div>
                             </div>
                         )}

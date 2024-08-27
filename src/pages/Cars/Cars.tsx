@@ -1,8 +1,13 @@
+import { useGetAllCarsQuery } from "../../redux/features/car/carApi";
 import CarCard from "./CarCard";
 import Filter from "./Filter";
 
 const Cars = () => {
-    const cars = [
+
+    const { data } = useGetAllCarsQuery(undefined);
+    const cars = data?.data;
+
+   /*  const cars = [
         {
             id: 1, // Added id for key prop
             image: "https://i.ibb.co/DC3J4fN/slideTwo.jpg",
@@ -28,7 +33,7 @@ const Cars = () => {
                 "Great explorer of the truth, the master-builder of human happiness.",
         },
         // ... other cars
-    ];
+    ]; */
 
     return (
         <>
@@ -52,7 +57,7 @@ const Cars = () => {
                         />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {cars.map((car) => (
+                        {cars?.map((car) => (
                             <CarCard key={car.id} car={car} />
                         ))}
                     </div>

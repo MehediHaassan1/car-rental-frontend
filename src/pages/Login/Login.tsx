@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { useState } from "react";
@@ -21,16 +21,18 @@ const Login = () => {
     } = useForm<TLogin>();
     const [loginUser] = useLoginUserMutation();
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit: SubmitHandler<TLogin> = async (data) => {
         try {
             const res = await loginUser(data);
-            console.log(res);
+
             if (res.data.success) {
                 dispatch(
                     setUser({ user: res?.data.data, token: res?.data.token })
                 );
+                navigate("/");
             }
         } catch (error) {
             console.log(error);
@@ -164,7 +166,7 @@ const Login = () => {
                                         </div>
                                     </label>
 
-                                    <div className="text-right mt-2">
+                                    <div className="mt-2">
                                         <Link
                                             to="/"
                                             className="text-sm font-semibold text-red-900 hover:underline"
@@ -192,7 +194,7 @@ const Login = () => {
                                     </p>
                                     <Link
                                         to="/register"
-                                        className="py-2 px-5 ml-3 bg-white border-2 rounded hover:scale-110 duration-300 border-red-400  "
+                                        className="py-2 px-5 ml-3 bg-white border-2 rounded hover:scale-110 duration-300 border-gray-900  "
                                     >
                                         Register
                                     </Link>

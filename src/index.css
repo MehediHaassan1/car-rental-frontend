@@ -7,6 +7,12 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+*::selection {
+    background-color: black;
+    color: white;
+}
+
 @layer components {
     .custom-container {
         @apply mx-auto max-w-full px-4 sm:px-6 lg:px-8 2xl:max-w-[1440px] 2xl:px-0;

@@ -6,17 +6,17 @@ const CarCard = ({ car }) => {
             <div className="bg-white rounded-lg mb-4">
                 <img
                     src={car.image}
-                    alt={car.title}
+                    alt={car.name}
                     className="w-full h-40 object-cover mb-4"
                 />
             </div>
             <div className="bg-white p-4 rounded h-220 md:h-285">
                 <div className=" flex items-center justify-between mb-8">
-                    <h3 className="text-lg font-bold">{car.title}</h3>
+                    <h3 className="text-lg font-bold">{car.name}</h3>
 
                     <div className="mt-4 md:mt-0">
                         <span className="text-red-500 font-semibold text-xl">
-                            {car.price}
+                            {car.pricePerHour}
                         </span>
                         /Per Hour
                     </div>
@@ -25,7 +25,7 @@ const CarCard = ({ car }) => {
 
                 <Link
                     to="/car"
-                    className="rounded bg-red-500 text-white px-4 py-1 hover:bg-red-600 transition"
+                    className="rounded bg-red-500 text-white px-4 py-2 hover:bg-red-600 transition"
                 >
                     View Details
                 </Link>
