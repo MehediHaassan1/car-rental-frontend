@@ -119,7 +119,7 @@ const AboutUs = () => {
                 </div>
             </div>
 
-            <CompanyHistory />
+            {/* <CompanyHistory /> */}
 
             {/* Meet our Team */}
             <section className="bg-white text-center custom-container mt-10">

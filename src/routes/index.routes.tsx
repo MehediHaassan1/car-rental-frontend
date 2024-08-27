@@ -7,6 +7,8 @@ import CarDetails from "../pages/Cars/CarDetails";
 import NotFound from "../components/ui/NotFound";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import ProtectedRoute from "../components/layouts/ProtectedRoute";
+import Booking from "../pages/Booking/Booking";
 
 const router = createBrowserRouter([
     {
@@ -23,7 +25,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/booking",
-                element: <div>This is booking</div>,
+                element: (
+                    <ProtectedRoute>
+                        <Booking />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/contact",
@@ -34,7 +40,7 @@ const router = createBrowserRouter([
                 element: <Cars />,
             },
             {
-                path: "/car",
+                path: "/car/:id",
                 element: <CarDetails />,
             },
             {

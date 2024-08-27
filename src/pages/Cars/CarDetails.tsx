@@ -3,16 +3,21 @@ import { BsFillLuggageFill, BsSpeedometer } from "react-icons/bs";
 import { SiGoogleearthengine } from "react-icons/si";
 import { TbAirConditioning } from "react-icons/tb";
 import { GiCarDoor, GiElectric } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetAllCarsQuery } from "../../redux/features/car/carApi";
 import CarCard from "./CarCard";
+import { TCar } from "../../types";
 
 const CarDetails = () => {
+    const { id } = useParams();
     const { data } = useGetAllCarsQuery(undefined);
-    const relatedCars = data?.data.slice(0, 3);
+    const filteredCar:TCar[] = data?.data.filter((car:TCar) => car._id !== id);
+
+    const shuffledCars = filteredCar?.sort(() => 0.5 - Math.random());
+    const relatedCars = shuffledCars?.slice(0, 3);
 
     return (
-        <>
+        <div>
             <div className="custom-container h-4/5">
                 <div className="flex flex-col md:flex-row justify-between gap-5">
                     <div className="w-full md:w-2/3 lg:w-1/2 h-4/5">
@@ -107,7 +112,24 @@ const CarDetails = () => {
                         <h2 className="text-2xl font-semibold mb-4">
                             Description
                         </h2>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae cumque sequi, tempore error eos nulla eius reprehenderit commodi totam est accusantium quam voluptates excepturi maiores quibusdam voluptate vero amet consequatur harum corrupti consectetur expedita repellendus itaque dignissimos? Voluptatem quaerat mollitia minus eos aperiam dolores, quam iusto voluptatum vero officiis magnam consequatur consectetur dolore libero in distinctio! Excepturi cupiditate modi, error, eligendi sint amet itaque animi cum, consectetur esse recusandae. Ea eum quas ducimus perferendis sint beatae incidunt tenetur debitis, suscipit nesciunt blanditiis, fugit deleniti labore enim quis numquam tempore quae expedita rem repudiandae. Ullam, suscipit. Pariatur eos quis cum voluptates!</p>
+                        <p>
+                            Lorem ipsum dolor, sit amet consectetur adipisicing
+                            elit. Recusandae cumque sequi, tempore error eos
+                            nulla eius reprehenderit commodi totam est
+                            accusantium quam voluptates excepturi maiores
+                            quibusdam voluptate vero amet consequatur harum
+                            corrupti consectetur expedita repellendus itaque
+                            dignissimos? Voluptatem quaerat mollitia minus eos
+                            aperiam dolores, quam iusto voluptatum vero officiis
+                            magnam consequatur consectetur dolore libero in
+                            distinctio! Excepturi cupiditate modi, error,
+                            eligendi sint amet itaque animi cum, consectetur
+                            esse recusandae. Ea eum quas ducimus perferendis
+                            sint beatae incidunt tenetur debitis, suscipit
+                            nesciunt blanditiis, fugit deleniti labore enim quis
+                            numquam tempore quae expedita rem repudiandae.
+                            Ullam, suscipit. Pariatur eos quis cum voluptates!
+                        </p>
                     </div>
                     <div className="md:w-1/2">
                         <h2 className="text-2xl font-semibold mb-4">
@@ -187,7 +209,7 @@ const CarDetails = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

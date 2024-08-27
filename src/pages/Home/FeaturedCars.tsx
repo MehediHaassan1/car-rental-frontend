@@ -4,10 +4,11 @@ import { GiCarDoor } from "react-icons/gi";
 import { FaArrowRight } from "react-icons/fa6";
 import { useGetAllCarsQuery } from "../../redux/features/car/carApi";
 import { Link } from "react-router-dom";
+import { TCar } from "../../types";
 
 const FeaturedCar = () => {
     const { data } = useGetAllCarsQuery(undefined);
-    const featuredCar = data?.data.slice(0, 3);
+    const featuredCar:TCar[] = data?.data.slice(0, 3);
 
     return (
         <div className="custom-container w-full min-h-screen my-10">
@@ -55,15 +56,17 @@ const FeaturedCar = () => {
                                             </div>
                                             <div className="w-full lg:w-1/2 flex items-center justify-start lg:justify-end gap-2 lg:gap-4">
                                                 <p className="flex items-center gap-2">
-                                                    <FaUser /> 4
+                                                    <FaUser /> {item.seats}
                                                 </p>
 
                                                 <p className="flex items-center gap-2">
-                                                    <BsFillSuitcase2Fill /> 2
+                                                    <BsFillSuitcase2Fill />{" "}
+                                                    {item.luggage}
                                                 </p>
 
                                                 <p className="flex items-center gap-2">
-                                                    <GiCarDoor /> 4
+                                                    <GiCarDoor />{" "}
+                                                    {item.doorCount}
                                                 </p>
                                             </div>
                                         </div>
@@ -71,16 +74,17 @@ const FeaturedCar = () => {
                                         <div className=" flex items-center justify-between w-full mt-4">
                                             <h3 className="text-2xl">
                                                 <span className="text-3xl font-semibold">
-                                                    ${item.pricePerHour}
+                                                    ${item.pricePerDay}
                                                 </span>
-                                                /hour
+                                                /day
                                             </h3>
-                                            <h1
+                                            <Link
+                                                to={`/car/${item._id}`}
                                                 className="text-lg block bg-red-500 hover:bg-red-600 focus:bg-red-500 text-white font-semibold rounded
                 px-4 py-2 duration-300 hover:cursor-pointer"
                                             >
                                                 View Details
-                                            </h1>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +94,10 @@ const FeaturedCar = () => {
                 </div>
 
                 <div className="mt-8 flex items-center justify-center">
-                    <Link to='/rent-car' className="bg-red-600 px-8 py-3 rounded text-red-100 hover:bg-red-700 transition duration-300 flex items-center gap-2 group">
+                    <Link
+                        to="/rent-car"
+                        className="bg-red-600 px-8 py-3 rounded text-red-100 hover:bg-red-700 transition duration-300 flex items-center gap-2 group"
+                    >
                         Show all vehicles
                         <span>
                             <FaArrowRight className="group-hover:rotate-0 transition-all lg:-rotate-[30deg] text-xl" />

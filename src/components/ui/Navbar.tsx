@@ -5,9 +5,9 @@ import { Link, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { removeUser } from "../../redux/features/auth/authSlice";
 
-
 const NavBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const { user } = useAppSelector((state) => state.auth);
     const location = useLocation();
 
     const toggleSidebar = () => {
@@ -19,7 +19,6 @@ const NavBar = () => {
     };
 
     // const {user} = useSelector
-    const { user } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
 
     const handleLogOut = () => {
@@ -43,10 +42,9 @@ const NavBar = () => {
 
     const Links = [
         { path: "/", name: "home" },
+        ...(user ? [{ path: "/booking", name: "booking" }] : []),
         { path: "/rent-car", name: "rent car" },
-        { path: "/car", name: "car" },
         { path: "/about-us", name: "about us" },
-        { path: "/booking", name: "booking" },
         { path: "/contact", name: "contact us" },
     ];
 
