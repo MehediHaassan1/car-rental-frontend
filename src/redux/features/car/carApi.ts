@@ -24,7 +24,14 @@ const carApi = baseApi.injectEndpoints({
         }
       }
     }),
-
+    getSingleCar:builder.query({
+      query: (id)=>{
+        return {
+          url: `/cars/${id}`,
+          method: 'GET',
+        }
+      }
+    }),
     searchCars: builder.mutation({
       query: (searchData) => {
         return {
@@ -37,4 +44,4 @@ const carApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetAllCarsQuery, useSearchCarsMutation } = carApi;
+export const { useGetAllCarsQuery, useGetSingleCarQuery, useSearchCarsMutation } = carApi;

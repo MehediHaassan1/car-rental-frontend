@@ -43,7 +43,7 @@ const NavBar = () => {
     const Links = [
         { path: "/", name: "home" },
         ...(user ? [{ path: "/booking", name: "booking" }] : []),
-        { path: "/rent-car", name: "rent car" },
+        { path: "/cars", name: "cars" },
         { path: "/about-us", name: "about us" },
         { path: "/contact", name: "contact us" },
     ];

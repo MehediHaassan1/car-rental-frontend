@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import { TCar } from "../../types";
 
 const FeaturedCar = () => {
-    const { data } = useGetAllCarsQuery(undefined);
-    const featuredCar:TCar[] = data?.data.slice(0, 3);
+    const { data } = useGetAllCarsQuery({ price: 0 });
+    const featuredCar: TCar[] = data?.data.slice(0, 6);
 
     return (
         <div className="custom-container w-full min-h-screen my-10">
@@ -35,7 +35,7 @@ const FeaturedCar = () => {
                                     <div className="lg:p-3">
                                         <img
                                             className="object-cover w-full h-48 rounded"
-                                            src="https://images.unsplash.com/photo-1523978591478-c753949ff840?w=900"
+                                            src={item.carImage}
                                             alt=""
                                         />
                                     </div>

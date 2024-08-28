@@ -36,7 +36,7 @@ const router = createBrowserRouter([
                 element: <div>Contact us</div>,
             },
             {
-                path: "/rent-car",
+                path: "/cars",
                 element: <Cars />,
             },
             {

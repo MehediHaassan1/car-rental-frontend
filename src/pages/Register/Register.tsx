@@ -271,11 +271,11 @@ const Register = () => {
                                                     message:
                                                         "Password is required",
                                                 },
-                                                pattern: {
-                                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/,
-                                                    message:
-                                                        "Not enough strong",
-                                                },
+                                                // pattern: {
+                                                //     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/,
+                                                //     message:
+                                                //         "Not enough strong",
+                                                // },
                                                 minLength: {
                                                     value: 6,
                                                     message:
