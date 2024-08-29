@@ -13,6 +13,7 @@ import DashboardLayout from "../components/layouts/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Profile from "../pages/Dashboard/Profile";
 import MyBookings from "../pages/Dashboard/user/MyBookings";
+import AllUsers from "../pages/Dashboard/admin/AllUsers";
 
 const router = createBrowserRouter([
     {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
             {
                 path: "my-bookings",
                 element: <MyBookings />,
+            },
+            {
+                path: "all-users",
+                element: <AllUsers />,
             },
         ],
     },

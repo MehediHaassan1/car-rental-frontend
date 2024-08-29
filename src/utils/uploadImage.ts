@@ -1,36 +1,35 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import Swal from "sweetalert2";
 
-// Utility function for image upload
-const uploadImage = async (imageFile: any) => {
-  const imageHostingKey = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-  const imageHostingURL = `https://api.imgbb.com/1/upload?key=${imageHostingKey}`;
+const uploadImageToCloudinary = async (imageFile: FileList | null): Promise<string | undefined> => {
+    const cloudName = "dpdfti8b0";
+    const uploadPreset = "randomImages";
+    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
-  let imageData;
-  if (imageFile) {
-    imageData = { image: imageFile[0] };
-  }
-
-  if (imageData) {
-    try {
-      const response = await axios.post(imageHostingURL, imageData, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      });
-
-      return response.data.data.display_url;
-    } catch (error) {
-      if (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Image upload failed!",
-          timer: 3000,
-        });
-      }
+    if (!imageFile || imageFile.length === 0) {
+        return undefined;
     }
-  }
+
+    const formData = new FormData();
+    formData.append("file", imageFile[0]);
+    formData.append("upload_preset", uploadPreset);
+
+    try {
+        const response = await axios.post(cloudinaryUrl, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+        return response.data.secure_url;
+    } catch (error) {
+        if (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Image upload failed!",
+                text: "Please try again later.",
+                timer: 3000,
+            });
+            return undefined;
+        }
+    }
 };
 
-export default uploadImage;
+export default uploadImageToCloudinary;

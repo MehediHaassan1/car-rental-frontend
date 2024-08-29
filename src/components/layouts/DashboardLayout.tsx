@@ -2,14 +2,14 @@ import { FaHome, FaUserAlt } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import { TbGitPullRequest } from "react-icons/tb";
 import { FaUsers } from "react-icons/fa6";
-import { RiDraftLine } from "react-icons/ri";
 import { Helmet } from "react-helmet-async";
 import { Avatar, Divider, Space } from "antd";
 import { useGetMeQuery } from "../../redux/features/user/userApi";
+import { MdCarCrash } from "react-icons/md";
 
 const DashboardLayout = () => {
-    const {data: user} = useGetMeQuery(undefined)
-    
+    const { data: user } = useGetMeQuery(undefined);
+    console.log(user);
     return (
         <>
             <Helmet>
@@ -20,10 +20,7 @@ const DashboardLayout = () => {
                     <div className="md:col-span-4 lg:col-span-3 bg-primary p-4 lg:p-10 rounded-md text-center min-h-screen text-black bg-red-200">
                         {user?.data?.image ? (
                             <Space size={64} wrap>
-                                <Avatar
-                                    size={64}
-                                    src={user?.data?.image}
-                                />
+                                <Avatar size={64} src={user?.data?.image} />
                             </Space>
                         ) : (
                             <Space size={16} wrap>
@@ -72,26 +69,26 @@ const DashboardLayout = () => {
                                         to="all-users"
                                     >
                                         <FaUsers className="w-5 h-5 text-accent"></FaUsers>
-                                        All Users
+                                        Users
                                     </NavLink>
                                     <NavLink
                                         className="flex items-center gap-2 border p-2 rounded-md text-txt"
-                                        to="all-blood-donation-request"
+                                        to="all-bookings"
                                     >
                                         <TbGitPullRequest className="w-5 h-5 text-accent"></TbGitPullRequest>
-                                        All Requests
+                                        Bookings
                                     </NavLink>
                                     <NavLink
                                         className="flex items-center gap-2 border p-2 rounded-md text-txt"
-                                        to="content-management"
+                                        to="all-bookings"
                                     >
-                                        <RiDraftLine className="w-5 h-5 text-accent"></RiDraftLine>
-                                        Content
+                                        <MdCarCrash className="w-5 h-5 text-accent"></MdCarCrash>
+                                        Cars
                                     </NavLink>
                                 </>
                             )}
 
-                            <Divider style={{color: 'gray'}}></Divider>
+                            <Divider style={{ color: "gray" }}></Divider>
                             <NavLink
                                 className="flex items-center gap-2 border p-2 rounded-md text-txt"
                                 to="/"

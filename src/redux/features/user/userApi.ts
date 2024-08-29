@@ -2,6 +2,47 @@ import { baseApi } from "../../api/baseApi";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+
+    getAllUsers: builder.query({
+      query: () => {
+        return {
+          url: '/users',
+          method: 'GET',
+        }
+      },
+      providesTags: ['user'],
+    }),
+
+    getSingleUser: builder.query({
+      query: (id) => {
+        return {
+          url: `/users/${id}`,
+          method: 'GET',
+        }
+      },
+      providesTags: ['user'],
+    }),
+
+    deleteUsers: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/users/delete-user/${id}`,
+          method: 'DELETE',
+        }
+      },
+      invalidatesTags: ['user'],
+    }),
+
+    makeAdmin: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/users/make-admin/${id}`,
+          method: 'PATCH',
+        }
+      },
+      invalidatesTags: ['user'],
+    }),
+
     getMe: builder.query({
       query: () => {
         return {
@@ -11,12 +52,14 @@ const userApi = baseApi.injectEndpoints({
       },
       providesTags: ['user'],
     }),
+
     updateUser: builder.mutation({
-      query: (payload) => {
+      query: (data) => {
+        console.log(data)
         return {
-          url: '/users/update-profile',
+          url: `/users/update-profile`,
           method: 'PUT',
-          body: payload,
+          body: data,
         }
       },
       invalidatesTags: ['user'],
@@ -24,4 +67,11 @@ const userApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetMeQuery, useUpdateUserMutation } = userApi;
+export const {
+  useGetAllUsersQuery,
+  useMakeAdminMutation,
+  useDeleteUsersMutation,
+  useGetMeQuery,
+  useUpdateUserMutation,
+  useGetSingleUserQuery
+} = userApi;

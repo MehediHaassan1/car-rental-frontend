@@ -95,7 +95,7 @@ const FeaturedCar = () => {
 
                 <div className="mt-8 flex items-center justify-center">
                     <Link
-                        to="/rent-car"
+                        to="/cars"
                         className="bg-red-600 px-8 py-3 rounded text-red-100 hover:bg-red-700 transition duration-300 flex items-center gap-2 group"
                     >
                         Show all vehicles
