@@ -1,13 +1,14 @@
-import { Avatar, Button, Dropdown, MenuProps } from "antd";
+import { Avatar, Dropdown, MenuProps, Space } from "antd";
 import { useState } from "react";
-import { FaUser } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { removeUser } from "../../redux/features/auth/authSlice";
+import { useGetMeQuery } from "../../redux/features/user/userApi";
 
 const NavBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const { user } = useAppSelector((state) => state.auth);
+    const { token } = useAppSelector((state) => state.auth);
+    const { data: user } = useGetMeQuery(undefined);
     const location = useLocation();
 
     const toggleSidebar = () => {
@@ -42,7 +43,7 @@ const NavBar = () => {
 
     const Links = [
         { path: "/", name: "home" },
-        ...(user ? [{ path: "/booking", name: "booking" }] : []),
+        ...(token ? [{ path: "/booking", name: "booking" }] : []),
         { path: "/cars", name: "cars" },
         { path: "/about-us", name: "about us" },
         { path: "/contact", name: "contact us" },
@@ -79,31 +80,32 @@ const NavBar = () => {
                     </div>
 
                     <div className="flex items-center gap-4">
-                        {user ? (
+                        {token ? (
                             <Dropdown
                                 trigger={["click"]}
                                 menu={{ items }}
                                 placement="bottom"
+                                className="hover:cursor-pointer"
                             >
-                                <Button
-                                    style={{
-                                        border: "none",
-                                        padding: 2,
-                                        borderRadius: "100%",
-                                    }}
-                                    type="text"
-                                >
-                                    <Avatar
-                                        size={48}
-                                        icon={<FaUser />}
-                                        className="rounded-full h-10 w-10"
-                                        style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                        }}
-                                    />
-                                </Button>
+                                {user?.data?.image ? (
+                                    <Space size={48} wrap>
+                                        <Avatar
+                                            size={48}
+                                            src={user?.data?.image}
+                                            
+                                        />
+                                    </Space>
+                                ) : (
+                                    <Space size={16} wrap>
+                                        <Avatar
+                                            size={64}
+                                            style={{ fontSize: "32px" }}
+                                            className="bg-red-200 font-bold text-black"
+                                        >
+                                            {user?.data?.name?.slice(0, 1)}
+                                        </Avatar>
+                                    </Space>
+                                )}
                             </Dropdown>
                         ) : (
                             <div className="lg:block md:block hidden">

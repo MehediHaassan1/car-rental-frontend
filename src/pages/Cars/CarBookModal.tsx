@@ -91,7 +91,6 @@ const CarBookModal = ({ car }: { car: TCar }) => {
             <Modal
                 open={open}
                 title="Book Your Car Now"
-                // onOk={handleOk}
                 onCancel={handleCancel}
                 footer={null}
             >
@@ -344,7 +343,6 @@ const CarBookModal = ({ car }: { car: TCar }) => {
                                             </div>
                                         )}
 
-                                        {/* PayPal form */}
                                         {!card && (
                                             <div>
                                                 <div className="flex flex-col mb-4">

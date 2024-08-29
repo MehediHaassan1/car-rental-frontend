@@ -9,6 +9,10 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import ProtectedRoute from "../components/layouts/ProtectedRoute";
 import Booking from "../pages/Booking/Booking";
+import DashboardLayout from "../components/layouts/DashboardLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Profile from "../pages/Dashboard/Profile";
+import MyBookings from "../pages/Dashboard/user/MyBookings";
 
 const router = createBrowserRouter([
     {
@@ -51,11 +55,33 @@ const router = createBrowserRouter([
                 path: "register",
                 element: <Register />,
             },
+        ],
+    },
+    {
+        path: "/dashboard",
+        element: (
+            <ProtectedRoute>
+                <DashboardLayout />
+            </ProtectedRoute>
+        ),
+        children: [
             {
-                path: "*",
-                element: <NotFound />,
+                index: true,
+                element: <Dashboard />,
+            },
+            {
+                path: "profile",
+                element: <Profile />,
+            },
+            {
+                path: "my-bookings",
+                element: <MyBookings />,
             },
         ],
+    },
+    {
+        path: "*",
+        element: <NotFound />,
     },
 ]);
 

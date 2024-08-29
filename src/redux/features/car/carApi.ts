@@ -22,15 +22,17 @@ const carApi = baseApi.injectEndpoints({
           method: 'GET',
           params,
         }
-      }
+      },
+      providesTags: ['car'],
     }),
-    getSingleCar:builder.query({
-      query: (id)=>{
+    getSingleCar: builder.query({
+      query: (id) => {
         return {
           url: `/cars/${id}`,
           method: 'GET',
         }
-      }
+      },
+      providesTags: ['car'],
     }),
     searchCars: builder.mutation({
       query: (searchData) => {
@@ -39,7 +41,8 @@ const carApi = baseApi.injectEndpoints({
           method: 'POST',
           body: searchData,
         }
-      }
+      },
+      invalidatesTags: ['car'],
     })
   }),
 })

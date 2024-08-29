@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.2.7",
     "@types/react-vertical-timeline-component": "^3.3.6",
     "antd": "^5.20.2",
+    "axios": "^1.7.5",
     "hamburger-react": "^2.5.1",
     "locomotive-scroll": "^4.1.4",
     "moment": "^2.30.1",
