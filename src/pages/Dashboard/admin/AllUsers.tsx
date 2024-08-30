@@ -1,16 +1,12 @@
-import { Dropdown, Menu, Table, Avatar, Button, Modal } from "antd";
+import { Dropdown, Menu, Table, Avatar } from "antd";
 import {
     useDeleteUsersMutation,
     useGetAllUsersQuery,
-    useGetSingleUserQuery,
-    useUpdateUserMutation,
+    useMakeAdminMutation,
 } from "../../../redux/features/user/userApi";
 import { FaEllipsisV } from "react-icons/fa";
 import { TUser } from "../../../types";
 import Swal from "sweetalert2";
-import { useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import uploadImage from "../../../utils/uploadImage";
 
 interface DataType {
     key: string;
@@ -18,11 +14,13 @@ interface DataType {
     email: string;
     address: string;
     image?: string;
+    isDeleted: boolean;
 }
 
 const AllUsers = () => {
     const { data: allUsers = [] } = useGetAllUsersQuery(undefined);
     const [deleteUser] = useDeleteUsersMutation();
+    const [makeAdmin] = useMakeAdminMutation();
 
     const dataSource: DataType[] = allUsers?.data?.map((user: TUser) => ({
         key: user._id,
@@ -30,29 +28,78 @@ const AllUsers = () => {
         email: user.email,
         address: user.address || "N/A",
         image: user.image,
+        isDeleted: user.isDeleted,
     }));
 
-    const handleAction = (action: string, record: DataType) => {
-        console.log(`Action: ${action}`, record);
-    };
+    const handleMakeAdmin = async (id: string) => {
 
-    const handleDelete = (id: string) => {
         Swal.fire({
             title: "Are you sure?",
-            text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
+            confirmButtonText: `Make admin` ,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await makeAdmin(id);
+                    if (res.data.success) {
+                        Swal.fire({
+                            title: `User has been made admin!`,
+                            text: `User's privileges have been updated.`,
+                            icon: "success",
+                        });
+                    }
+                } catch (error) {
+                    if (error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Something went wrong",
+                            showConfirmButton: false,
+                            timer: 3000,
+                        });
+                    }
+                }
+            }
+        });
+
+        /* try {
+            const res = await makeAdmin(id);
+            if (res.data.success) {
+                Swal.fire(
+                    "User has been made admin!",
+                    "User's privileges have been updated.",
+                    "success"
+                );
+            }
+        } catch (error) {
+            if (error) {
+                Swal.fire(
+                    "Failed to make admin!",
+                    "User's privileges have not been updated.",
+                    "error"
+                );
+            }
+        } */
+    };
+
+    const handleUpdateStatus = (id: string, active:boolean) => {
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `${active ? "Active" : 'Block'}` ,
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
                     const res = await deleteUser(id);
                     if (res.data.success) {
                         Swal.fire({
-                            title: "Deleted!",
-                            text: "User has been deleted.",
+                            title: `${active ? "Activated" : 'Blocked'}`,
+                            text: `User has been ${active ? "activated" : 'blocked'}.`,
                             icon: "success",
                         });
                     }
@@ -73,19 +120,30 @@ const AllUsers = () => {
     // Define menu items
     const getMenuItems = (record: DataType) => [
         {
-            key: "edit",
-            label: <EditUserDataModal details={record} />,
-        },
-        {
             key: "delete",
-            label: (
-                <button onClick={() => handleDelete(record.key)}>Delete</button>
+            label: record.isDeleted ? (
+                <button
+                    className="w-full block text-left"
+                    onClick={() => handleUpdateStatus(record.key, record.isDeleted)}
+                >
+                    Active
+                </button>
+            ) : (
+                <button
+                    className="w-full block text-left"
+                    onClick={() => handleUpdateStatus(record.key, record.isDeleted)}
+                >
+                    Block
+                </button>
             ),
         },
         {
             key: "makeAdmin",
             label: (
-                <button onClick={() => handleAction("Make admin", record)}>
+                <button
+                    className="w-full block text-left"
+                    onClick={() => handleMakeAdmin(record.key)}
+                >
                     Make admin
                 </button>
             ),
@@ -131,16 +189,19 @@ const AllUsers = () => {
         {
             title: "Action",
             key: "action",
-            render: (record: DataType) => (
-                <Dropdown
-                    trigger={["click"]}
-                    overlay={getMenu(record)}
-                    placement="bottomRight"
-                    className="cursor-pointer"
-                >
-                    <FaEllipsisV />
-                </Dropdown>
-            ),
+            render: (record: DataType) => {
+                console.log(record);
+                return (
+                    <Dropdown
+                        trigger={["click"]}
+                        overlay={getMenu(record)}
+                        placement="bottomRight"
+                        className="cursor-pointer"
+                    >
+                        <FaEllipsisV />
+                    </Dropdown>
+                );
+            },
         },
     ];
 
@@ -155,167 +216,3 @@ const AllUsers = () => {
 };
 
 export default AllUsers;
-
-const EditUserDataModal = ({ details }: DataType) => {
-    const { data: user } = useGetSingleUserQuery(details.key);
-
-    console.log(user?.data?._id);
-
-    const [updateUser] = useUpdateUserMutation();
-    const { register, handleSubmit, reset } = useForm();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        const { image, ...rest } = data;
-        const userImage = await uploadImage(image);
-        const modifiedUserData = {
-            ...rest,
-            image: userImage,
-        };
-        try {
-            const res = await updateUser({
-                data: modifiedUserData,
-                id: details.key,
-            });
-
-            if (res.data.success) {
-                Swal.fire({
-                    icon: "success",
-                    title: "User update successfully",
-                    showConfirmButton: false,
-                    timer: 3000,
-                });
-                reset();
-                setIsModalOpen(false);
-            }
-        } catch (error) {
-            if (error) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Something went wrong",
-                    showConfirmButton: false,
-                    timer: 3000,
-                });
-            }
-        }
-    };
-
-    return (
-        <>
-            <button onClick={showModal}>Edit</button>
-            <Modal
-                title={`Update ${details.name}'s info`}
-                open={isModalOpen}
-                onCancel={handleCancel}
-                footer={null}
-            >
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-5">
-                        <div className="w-full md:w-1/2">
-                            <label className="form-control w-full">
-                                <div className="label">
-                                    <span className="label-text text-lg font-semibold">
-                                        Name
-                                    </span>
-                                </div>
-                                <input
-                                    {...register("name")}
-                                    type="text"
-                                    className="input w-full  focus:outline-none text-lg border border-gray-700  rounded px-4 py-2"
-                                    defaultValue={user?.data?.name}
-                                />
-                            </label>
-                        </div>
-                        <div className="w-full md:w-1/2">
-                            <label className="form-control w-full">
-                                <div className="label">
-                                    <span className="label-text text-lg font-semibold">
-                                        Email
-                                    </span>
-                                </div>
-                                <input
-                                    type="text"
-                                    defaultValue={user?.data?.email}
-                                    className="input w-full focus:outline-none text-lg border border-gray-700 rounded px-4 py-2"
-                                />
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-5 mt-4">
-                        <div className="w-full md:w-1/2">
-                            <label className="form-control w-full">
-                                <div className="label">
-                                    <span className="label-text text-lg font-semibold">
-                                        Phone Number
-                                    </span>
-                                </div>
-                                <input
-                                    type="text"
-                                    defaultValue={user?.data?.phone}
-                                    className="input w-full focus:outline-none text-lg border border-gray-700 rounded px-4 py-2 "
-                                    {...register("phone", {
-                                        pattern: {
-                                            value: /^[0-9]+$/,
-                                            message: "Only number required",
-                                        },
-                                        minLength: {
-                                            value: 11,
-                                            message: "11 digit number need",
-                                        },
-                                    })}
-                                />
-                            </label>
-                        </div>
-                        <div className="w-full md:w-1/2">
-                            <label className="form-control w-full">
-                                <div className="label">
-                                    <span className="label-text text-lg font-semibold">
-                                        Address
-                                    </span>
-                                </div>
-                                <input
-                                    type="text"
-                                    placeholder="street, city, state"
-                                    defaultValue={user?.data?.address}
-                                    className="input w-full focus:outline-none text-lg border border-gray-700 rounded px-4 py-2 "
-                                    {...register("address")}
-                                />
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="mt-5">
-                        <label className="form-control w-full">
-                            <div className="label">
-                                <span className="label-text text-lg font-semibold">
-                                    Image
-                                </span>
-                            </div>
-                            <input
-                                {...register("image")}
-                                type="file"
-                                className="file-input file-input-bordered w-full  border border-gray-700 rounded px-4 py-2"
-                            />
-                        </label>
-                    </div>
-
-                    <div className="mt-5">
-                        <input
-                            type="submit"
-                            value="Update"
-                            className="file-input file-input-bordered w-full font-bold rounded px-4 py-2 cursor-pointer disabled:cursor-not-allowed bg-red-400 hover:bg-red-600 transition-all duration-300"
-                        />
-                    </div>
-                </form>
-            </Modal>
-        </>
-    );
-};

@@ -34,17 +34,29 @@ const carApi = baseApi.injectEndpoints({
       },
       providesTags: ['car'],
     }),
-    searchCars: builder.mutation({
-      query: (searchData) => {
+    searchCars: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        
+        if (args?.carType) {
+          params.append('carType', args.carType);
+        }
+        if (args?.features) {
+          params.append('features', args.features);
+        }
+        if (args?.seats) {
+          params.append('seats', args.seats);
+        }
+        console.log(params)
         return {
           url: '/cars/search-cars',
-          method: 'POST',
-          body: searchData,
+          method: 'GET',
+          params,
         }
       },
-      invalidatesTags: ['car'],
+      providesTags: ['car'],
     })
   }),
 })
 
-export const { useGetAllCarsQuery, useGetSingleCarQuery, useSearchCarsMutation } = carApi;
+export const { useGetAllCarsQuery, useGetSingleCarQuery, useSearchCarsQuery } = carApi;

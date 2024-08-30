@@ -52,7 +52,6 @@ const Register = () => {
         };
         try {
             const res = await createUser(userData);
-            console.log(res)
             if (res.data.success) {
                 Swal.fire({
                     icon: "success",

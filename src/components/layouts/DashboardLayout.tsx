@@ -9,7 +9,7 @@ import { MdCarCrash } from "react-icons/md";
 
 const DashboardLayout = () => {
     const { data: user } = useGetMeQuery(undefined);
-    console.log(user);
+    // console.log(user);
     return (
         <>
             <Helmet>

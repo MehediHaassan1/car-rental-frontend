@@ -8,7 +8,11 @@ import { useGetMeQuery } from "../../redux/features/user/userApi";
 const NavBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { token } = useAppSelector((state) => state.auth);
-    const { data: user } = useGetMeQuery(undefined);
+
+    const { data: user } = useGetMeQuery(undefined, {
+        skip: !token,
+    });
+
     const location = useLocation();
 
     const toggleSidebar = () => {
@@ -89,18 +93,14 @@ const NavBar = () => {
                             >
                                 {user?.data?.image ? (
                                     <Space size={48} wrap>
-                                        <Avatar
-                                            size={48}
-                                            src={user?.data?.image}
-                                            
-                                        />
+                                        <Avatar size={48} src={user?.data?.image} />
                                     </Space>
                                 ) : (
                                     <Space size={16} wrap>
                                         <Avatar
                                             size={64}
                                             style={{ fontSize: "32px" }}
-                                            className="bg-red-200 font-bold text-black"
+                                            className="bg-red-200 font-bold text-black uppercase"
                                         >
                                             {user?.data?.name?.slice(0, 1)}
                                         </Avatar>

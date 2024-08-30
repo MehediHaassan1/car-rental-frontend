@@ -1,8 +1,5 @@
-import moment from "moment";
 import { useState } from "react";
 import { Button, Modal } from "antd";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useAppSelector } from "../../redux/hook";
 import { TCar } from "../../types";
@@ -15,18 +12,7 @@ const CarBookModal = ({ car }: { car: TCar }) => {
     const [createBook, { isLoading }] = useCreateBookingMutation();
     const { user, token } = useAppSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(moment().add(24, "hours").toDate());
     const navigate = useNavigate();
-
-    const pickUpDate = moment(startDate).format("DD/MM/YYYY");
-    const pickUpTime = moment(startDate).format("HH:mm");
-
-    const dropOffDate = moment(endDate).format("DD/MM/YYYY");
-    const dropOffTime = moment(endDate).format("HH:mm");
-
-    const minTime = moment().toDate();
-    const maxTime = moment().endOf("day").toDate();
 
     const { register, handleSubmit } = useForm();
 
@@ -35,13 +21,8 @@ const CarBookModal = ({ car }: { car: TCar }) => {
             identity: data?.identity,
             identityNo: data?.identityNo,
             drivingLicenseNo: data?.drivingLicenseNo,
-            pickUpDate: pickUpDate,
-            pickUpTime: pickUpTime,
-            dropOffDate: dropOffDate,
-            dropOffTime: dropOffTime,
             user: user?._id,
             car: car?._id,
-            location: car?.location,
         };
 
         try {
@@ -95,68 +76,6 @@ const CarBookModal = ({ car }: { car: TCar }) => {
                 footer={null}
             >
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex mb-3">
-                        <div className="col-span-1 lg:col-span-2 md:col-span-2 w-full flex flex-col">
-                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Pick-up date & time
-                            </label>
-                            <DatePicker
-                                className="custom-datepicker bg-white border text-gray-900 text-sm rounded block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-2.5 dark:text-white shadow-lg"
-                                selected={startDate}
-                                onChange={(date) => {
-                                    setStartDate(date as Date);
-                                    setEndDate(
-                                        moment(date).add(24, "hours").toDate()
-                                    );
-                                }}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={30}
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                minDate={new Date()}
-                                minTime={
-                                    startDate &&
-                                    moment().isSame(startDate, "day")
-                                        ? minTime
-                                        : undefined
-                                }
-                                maxTime={
-                                    startDate &&
-                                    moment().isSame(startDate, "day")
-                                        ? maxTime
-                                        : undefined
-                                }
-                            />
-                        </div>
-
-                        <div className="col-span-1 lg:col-span-2 md:col-span-2 w-full flex flex-col">
-                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Drop-off date & time
-                            </label>
-                            <DatePicker
-                                className="bg-white border text-gray-900 text-sm rounded block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-2.5 dark:text-white shadow-lg"
-                                selected={endDate}
-                                onChange={(date) => setEndDate(date as Date)}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={30}
-                                dateFormat="dd/MM/yyyy HH:mm"
-                                minDate={moment(startDate)
-                                    .add(24, "hours")
-                                    .toDate()} // Ensure 24 hours after pickup
-                                minTime={
-                                    endDate && moment().isSame(endDate, "day")
-                                        ? minTime
-                                        : undefined
-                                }
-                                maxTime={
-                                    endDate && moment().isSame(endDate, "day")
-                                        ? maxTime
-                                        : undefined
-                                }
-                            />
-                        </div>
-                    </div>
                     <div className="flex flex-col mb-3">
                         <label>NID/PASSPORT</label>
                         <select

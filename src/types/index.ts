@@ -36,6 +36,7 @@ export type TUser = {
   email: string;
   role: string;
   phone: string;
+  isDeleted: boolean;
   address: string;
   createdAt: string;
   updatedAt: string;

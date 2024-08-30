@@ -2,17 +2,18 @@ import { baseApi } from "../../api/baseApi";
 
 const bookingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+
     createBooking: builder.mutation({
       query: (data) => {
-        console.log(data);
         return {
           url: '/bookings',
           method: 'POST',
           body: data,
         }
       },
-      invalidatesTags: ['booking']
+      invalidatesTags: ['car']
     }),
+
     myBookings: builder.query({
       query: () => {
         return {
@@ -22,6 +23,7 @@ const bookingApi = baseApi.injectEndpoints({
       },
       providesTags: ['booking']
     }),
+
     updateBooking: builder.mutation({
       query: (payload) => {
         console.log(payload)
@@ -33,9 +35,9 @@ const bookingApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['booking']
     }),
+
     deleteBooking: builder.mutation({
       query: (payload) => {
-        console.log(payload)
         return {
           url: `/bookings/delete-booking/${payload}`,
           method: 'DELETE',
@@ -43,7 +45,32 @@ const bookingApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ['booking']
     }),
+
+    getAllBookings: builder.query({
+      query: () => {
+        return {
+          url: '/bookings',
+          method: "GET",
+        }
+      }
+    }),
+
+    getSingleBookings: builder.query({
+      query: (id) => {
+        return {
+          url: `/bookings/${id}`,
+          method: "GET",
+        }
+      }
+    })
   }),
 })
 
-export const { useCreateBookingMutation, useMyBookingsQuery, useUpdateBookingMutation, useDeleteBookingMutation } = bookingApi;
+export const {
+  useCreateBookingMutation,
+  useMyBookingsQuery,
+  useUpdateBookingMutation,
+  useDeleteBookingMutation,
+  useGetAllBookingsQuery,
+  useGetSingleBookingsQuery,
+} = bookingApi;

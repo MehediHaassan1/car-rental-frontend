@@ -1,326 +1,149 @@
-/* import moment from "moment";
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { debounce } from "lodash";
+import { useCallback, useState } from "react";
 import { TCar } from "../../types";
 import CarCard from "../Cars/CarCard";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { useSearchCarsMutation } from "../../redux/features/car/carApi";
+import { useSearchCarsQuery } from "../../redux/features/car/carApi";
+
+// Define types for state and search parameters
+interface SearchParams {
+    carType: string;
+    seats: string;
+    features: string;
+}
 
 const Booking = () => {
-    const [searchCars] = useSearchCarsMutation();
-    const [location, setLocation] = useState("");
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    // State for select values
+    const [carType, setCarType] = useState<string>("");
+    const [seats, setSeats] = useState<string>("");
+    const [features, setFeatures] = useState<string>("");
+    const [searchParams, setSearchParams] = useState<SearchParams>({ carType, seats, features });
 
-    console.log(startDate);
+    // Fetch data using the search parameters
+    const { data } = useSearchCarsQuery(searchParams, {
+        skip: !Object.values(searchParams).some(param => param)
+    });
 
-    const pickUpDate = moment(startDate).format("DD/MM/YYYY");
-    const pickUpTime = moment(startDate).format("HH:mm");
-
-    const dropOffDate = moment(endDate).format("DD/MM/YYYY");
-    const dropOffTime = moment(endDate).format("HH:mm");
-
-    const minTime = moment().toDate();
-    const maxTime = moment().endOf("day").toDate();
-
-    const [cars, setCars] = useState([]);
-    const handleCarSearch = async () => {
-        const data = {
-            location,
-            pickUpDate,
-            pickUpTime,
-            dropOffDate,
-            dropOffTime,
-        };
-
-        try {
-            const res = await searchCars(data);
-            if (res.data.success) {
-                setCars(res.data.data);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    return (
-        <div className="min-h-screen custom-container mx-auto">
-            <div className="container mx-auto my-10">
-                <div className="grid grid-cols-1 lg:grid-cols-7 items-end md:grid-cols-6 gap-4">
-                    <div className="col-span-1 lg:col-span-2 md:col-span-3">
-                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Pick-up location
-                        </label>
-                        <select
-                            id="pickup-location"
-                            className="bg-white border text-gray-900 text-sm rounded block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white shadow-lg"
-                            onChange={(e) => setLocation(e.target.value)}
-                        >
-                            <option value="">Select Location</option>
-                            <option value="Luxury Garage">Luxury Garage</option>
-                            <option value="Eco-Friendly Garage">
-                                Eco-Friendly Garage
-                            </option>
-                            <option value="Industrial Park">
-                                Industrial Park
-                            </option>
-                            <option value="Adventure Hub">Adventure Hub</option>
-                            <option value="Beachside Lot">Beachside Lot</option>
-                            <option value="City Lot">City Lot</option>
-                            <option value="Urban Garage">Urban Garage</option>
-                            <option value="Race Track Garage">
-                                Race Track Garage
-                            </option>
-                            <option value="City Center">City Center</option>
-                            <option value="Industrial Yard">
-                                Industrial Yard
-                            </option>
-                            <option value="Family Garage">Family Garage</option>
-                        </select>
-                    </div>
-
-                    <div className="col-span-1 lg:col-span-2 md:col-span-2 w-full flex flex-col">
-                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Pick-up date & time
-                        </label>
-                        <DatePicker
-                            className="custom-datepicker bg-white border text-gray-900 text-sm rounded block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-2.5 dark:text-white shadow-lg"
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date as Date)}
-                            showTimeSelect
-                            timeFormat="HH:mm"
-                            timeIntervals={30}
-                            dateFormat="dd/MM/yyyy HH:mm"
-                            minDate={new Date()} 
-                            minTime={
-                                startDate && moment().isSame(startDate, "day")
-                                    ? minTime
-                                    : undefined
-                            }
-                            maxTime={
-                                startDate && moment().isSame(startDate, "day")
-                                    ? maxTime
-                                    : undefined
-                            }
-                        />
-                    </div>
-
-                    <div className="col-span-1 lg:col-span-2 md:col-span-2 w-full flex flex-col">
-                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Drop-off date & time
-                        </label>
-                        <DatePicker
-                            className="bg-white border text-gray-900 text-sm rounded block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-2.5 dark:text-white shadow-lg"
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date as Date)}
-                            showTimeSelect
-                            timeFormat="HH:mm"
-                            timeIntervals={30}
-                            dateFormat="dd/MM/yyyy HH:mm"
-                            minDate={new Date()} // Prevent past dates
-                            minTime={
-                                endDate && moment(endDate).isSame(startDate, "day")
-                                    ? minTime
-                                    : undefined
-                            }
-                            maxTime={
-                                endDate && moment(endDate).isSame(startDate, "day")
-                                    ? maxTime
-                                    : undefined
-                            }
-                        />
-                    </div>
-
-                    <div className="col-span-1 lg:col-span-1 md:col-span-6 md:px-10 lg:px-0">
-                        <button
-                            onClick={handleCarSearch}
-                            className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold rounded px-4 py-2 shadow-lg"
-                        >
-                            Search
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                {cars?.map((car: TCar) => {
-                    return <CarCard key={car._id} car={car} />;
-                })}
-            </div>
-        </div>
+    // Debounced function to handle search
+    const handleSearchCars = useCallback(
+        debounce((params: SearchParams) => {
+            setSearchParams(params);
+        }, 500), // Debounce delay in milliseconds
+        []
     );
-};
 
-export default Booking;
- */
-
-import moment from "moment";
-import { useState } from "react";
-import { TCar } from "../../types";
-import CarCard from "../Cars/CarCard";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { useSearchCarsMutation } from "../../redux/features/car/carApi";
-import Swal from "sweetalert2";
-
-const Booking = () => {
-    const [searchCars] = useSearchCarsMutation();
-    const [location, setLocation] = useState("");
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-
-    const pickUpDate = moment(startDate);
-    const pickUpTime = moment(startDate).format("HH:mm");
-
-    const dropOffDate = moment(endDate);
-    const dropOffTime = moment(endDate).format("HH:mm");
-
-    const minTime = moment().toDate();
-    const maxTime = moment().endOf("day").toDate();
-
-    const [cars, setCars] = useState([]);
-
-    const handleCarSearch = async () => {
-        if (!location) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Please select a location!",
-            });
-            return;
-        }
-
-        if (
-            dropOffDate.isBefore(pickUpDate) ||
-            (dropOffDate.isSame(pickUpDate) && dropOffTime <= pickUpTime)
-        ) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Drop-off date and time must be after pick-up date and time.",
-            });
-            return;
-        }
-
-        const data = {
-            location,
-            pickUpDate: pickUpDate.format("DD/MM/YYYY"),
-            pickUpTime,
-            dropOffDate: dropOffDate.format("DD/MM/YYYY"),
-            dropOffTime,
-        };
-
-        try {
-            const res = await searchCars(data);
-            if (res.data.success) {
-                setCars(res.data.data);
-            }
-        } catch (error) {
-            console.log(error);
-        }
+    // Handlers for the select fields
+    const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newType = e.target.value;
+        setCarType(newType);
+        handleSearchCars({ ...searchParams, carType: newType });
     };
+
+    const handleSeatsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newSeats = e.target.value;
+        setSeats(newSeats);
+        handleSearchCars({ ...searchParams, seats: newSeats });
+    };
+
+    const handleFeaturesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newFeatures = e.target.value;
+        setFeatures(newFeatures);
+        handleSearchCars({ ...searchParams, features: newFeatures });
+    };
+
 
     return (
         <div className="min-h-screen custom-container mx-auto">
-            <div className="container mx-auto my-10">
-                <div className="grid grid-cols-1 lg:grid-cols-7 items-end md:grid-cols-6 gap-4">
-                    <div className="col-span-1 lg:col-span-2 md:col-span-3">
+            <div>
+                <div className="mt-10">
+                    <h1 className="text-xl md:text-2xl lg:text-3xl mb-10 font-semibold text-center">
+                        Select Your Car
+                    </h1>
+                </div>
+                <div className="flex flex-col md:flex-row md:justify-center md:space-x-4">
+                    <div className="w-full max-w-xs mb-4 md:mb-0">
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Pick-up location
+                            Car type
                         </label>
                         <select
-                            id="pickup-location"
+                            value={carType}
+                            id="car-type"
                             className="bg-white border text-gray-900 text-sm rounded block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white shadow-lg"
-                            onChange={(e) => setLocation(e.target.value)}
+                            onChange={handleTypeChange}
                         >
-                            <option value="">Select Location</option>
-                            <option value="Luxury Garage">Luxury Garage</option>
-                            <option value="Eco-Friendly Garage">
-                                Eco-Friendly Garage
-                            </option>
-                            <option value="Industrial Park">
-                                Industrial Park
-                            </option>
-                            <option value="Adventure Hub">Adventure Hub</option>
-                            <option value="Beachside Lot">Beachside Lot</option>
-                            <option value="City Lot">City Lot</option>
-                            <option value="Urban Garage">Urban Garage</option>
-                            <option value="Race Track Garage">
-                                Race Track Garage
-                            </option>
-                            <option value="City Center">City Center</option>
-                            <option value="Industrial Yard">
-                                Industrial Yard
-                            </option>
-                            <option value="Family Garage">Family Garage</option>
+                            <option value="">Car type</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Hatchback">Hatchback</option>
+                            <option value="Truck">Truck</option>
+                            <option value="Convertible">Convertible</option>
                         </select>
                     </div>
 
-                    <div className="col-span-1 lg:col-span-2 md:col-span-2 w-full flex flex-col">
+                    <div className="w-full max-w-xs mb-4 md:mb-0">
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Pick-up date & time
+                            Features
                         </label>
-                        <DatePicker
-                            className="custom-datepicker bg-white border text-gray-900 text-sm rounded block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-2.5 dark:text-white shadow-lg"
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date as Date)}
-                            showTimeSelect
-                            timeFormat="HH:mm"
-                            timeIntervals={30}
-                            dateFormat="dd/MM/yyyy HH:mm"
-                            minDate={new Date()}
-                            minTime={
-                                startDate && moment().isSame(startDate, "day")
-                                    ? minTime
-                                    : undefined
-                            }
-                            maxTime={
-                                startDate && moment().isSame(startDate, "day")
-                                    ? maxTime
-                                    : undefined
-                            }
-                        />
-                    </div>
-
-                    <div className="col-span-1 lg:col-span-2 md:col-span-2 w-full flex flex-col">
-                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Drop-off date & time
-                        </label>
-                        <DatePicker
-                            className="bg-white border text-gray-900 text-sm rounded block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-2.5 dark:text-white shadow-lg"
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date as Date)}
-                            showTimeSelect
-                            timeFormat="HH:mm"
-                            timeIntervals={30}
-                            dateFormat="dd/MM/yyyy HH:mm"
-                            minDate={new Date()}
-                            minTime={
-                                endDate && moment().isSame(endDate, "day")
-                                    ? minTime
-                                    : undefined
-                            }
-                            maxTime={
-                                endDate && moment().isSame(endDate, "day")
-                                    ? maxTime
-                                    : undefined
-                            }
-                        />
-                    </div>
-
-                    <div className="col-span-1 lg:col-span-1 md:col-span-6 md:px-10 lg:px-0">
-                        <button
-                            onClick={handleCarSearch}
-                            className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold rounded px-4 py-2 shadow-lg"
+                        <select
+                            value={features}
+                            id="features"
+                            className="bg-white border text-gray-900 text-sm rounded block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white shadow-lg"
+                            onChange={handleFeaturesChange}
                         >
-                            Search
-                        </button>
+                            <option value="">Features</option>
+                            <option value="Leather upholstery">
+                                Leather upholstery
+                            </option>
+                            <option value="Premium sound system">
+                                Premium sound system
+                            </option>
+                            <option value="Climate control">
+                                Climate control
+                            </option>
+                            <option value="Advanced driver assistance">
+                                Advanced driver assistance
+                            </option>
+                            <option value="Off-road driving modes">
+                                Off-road driving modes
+                            </option>
+                            <option value="Retractable roof">
+                                Retractable roof
+                            </option>
+                            <option value="Customizable driving modes">
+                                Customizable driving modes
+                            </option>
+                            <option value="Off-road tires">
+                                Off-road tires
+                            </option>
+                            <option value="High-tech interior">
+                                High-tech interior
+                            </option>
+                        </select>
+                    </div>
+
+                    <div className="w-full max-w-xs mb-4 md:mb-0">
+                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            Seats
+                        </label>
+                        <select
+                            value={seats}
+                            id="seats"
+                            className="bg-white border text-gray-900 text-sm rounded block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white shadow-lg"
+                            onChange={handleSeatsChange}
+                        >
+                            <option value="">Seats</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                        </select>
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                {cars?.map((car: TCar) => {
-                    return <CarCard key={car._id} car={car} />;
-                })}
+            <div className="min-h-scree w-full mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {data?.data?.map((car: TCar) => (
+                    <CarCard key={car._id} car={car} />
+                ))}
             </div>
         </div>
     );

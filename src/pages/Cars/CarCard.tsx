@@ -4,7 +4,6 @@ import CarBookModal from "./CarBookModal";
 
 const CarCard = ({ car }: { car: TCar }) => {
     const { pathname } = useLocation();
-    console.log(pathname);
     return (
         <div className="bg-gray-300 border  rounded  p-3 shadow-lg max-w-xs mx-auto">
             <div className="bg-white rounded-lg mb-4">
