@@ -9,7 +9,7 @@ import {
     useUpdateUserMutation,
 } from "../../redux/features/user/userApi";
 import Swal from "sweetalert2";
-import uploadImageToCloudinary from "../../utils/uploadImage";
+import uploadImageToCloudinary from "../../utils/uploadImageToCloudinary";
 
 const Profile = () => {
     const { register, handleSubmit } = useForm();

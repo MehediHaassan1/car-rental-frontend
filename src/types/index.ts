@@ -45,13 +45,10 @@ export type TUser = {
 
 export type TBooking = {
   _id: string
-  user: string
-  car: string
-  location: string
+  user: TUser
+  car: TCar
   pickUpDate: string
-  pickUpTime: string
   dropOffDate: string
-  dropOffTime: string
   totalCost: number
   isCanceled: boolean
   status: 'pending' | 'ongoing' | 'complete'
@@ -61,4 +58,17 @@ export type TBooking = {
   createdAt: string
   updatedAt: string
   __v: number
+}
+
+export interface TBookingDataType {
+  key: string;
+  car: TCar;
+  user: TUser;
+  totalCost: number;
+  identity: string
+  identityNo: string
+  drivingLicenseNo: string;
+  status: string;
+  pickUpDate: string;
+  dropOffDate: string;
 }

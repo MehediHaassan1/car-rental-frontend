@@ -47,7 +47,6 @@ const carApi = baseApi.injectEndpoints({
         if (args?.seats) {
           params.append('seats', args.seats);
         }
-        console.log(params)
         return {
           url: '/cars/search-cars',
           method: 'GET',

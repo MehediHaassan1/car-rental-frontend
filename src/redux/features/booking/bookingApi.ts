@@ -11,7 +11,7 @@ const bookingApi = baseApi.injectEndpoints({
           body: data,
         }
       },
-      invalidatesTags: ['car']
+      invalidatesTags: ['car', 'booking']
     }),
 
     myBookings: builder.query({
@@ -52,7 +52,8 @@ const bookingApi = baseApi.injectEndpoints({
           url: '/bookings',
           method: "GET",
         }
-      }
+      },
+      providesTags: ['booking']
     }),
 
     getSingleBookings: builder.query({
@@ -61,7 +62,28 @@ const bookingApi = baseApi.injectEndpoints({
           url: `/bookings/${id}`,
           method: "GET",
         }
-      }
+      },
+      providesTags: ['booking']
+    }),
+
+    updateBookingStatus: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/bookings/update-status/${id}`,
+          method: 'PATCH',
+        }
+      },
+      invalidatesTags: ['booking']
+    }),
+
+    bookingUpdateComplete: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/bookings/booking-update-complete/${id}`,
+          method: 'POST',
+        }
+      },
+      invalidatesTags: ['booking']
     })
   }),
 })
@@ -73,4 +95,6 @@ export const {
   useDeleteBookingMutation,
   useGetAllBookingsQuery,
   useGetSingleBookingsQuery,
+  useUpdateBookingStatusMutation,
+  useBookingUpdateCompleteMutation,
 } = bookingApi;

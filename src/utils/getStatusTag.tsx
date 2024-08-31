@@ -5,7 +5,7 @@ const getStatusTag = (status: string) => {
         case "complete":
             return <Tag color="green">Complete</Tag>;
         case "ongoing":
-            return <Tag color="blue">In Progress</Tag>;
+            return <Tag color="blue">Ongoing</Tag>;
         case "pending":
             return <Tag color="yellow" >Pending</Tag>;
         default:
