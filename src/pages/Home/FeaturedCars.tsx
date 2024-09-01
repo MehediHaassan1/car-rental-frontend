@@ -74,7 +74,7 @@ const FeaturedCar = () => {
                                         <div className=" flex items-center justify-between w-full mt-4">
                                             <h3 className="text-2xl">
                                                 <span className="text-3xl font-semibold">
-                                                    ${item.pricePerDay}
+                                                    ${item.pricePerHour}
                                                 </span>
                                                 /day
                                             </h3>

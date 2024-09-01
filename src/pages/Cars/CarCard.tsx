@@ -19,7 +19,7 @@ const CarCard = ({ car }: { car: TCar }) => {
 
                     <div className="mt-4 md:mt-0 font-bold">
                         <span className="text-red-500 text-xl">
-                            ${car.pricePerDay}
+                            ${car.pricePerHour}
                         </span>
                         /Day
                     </div>

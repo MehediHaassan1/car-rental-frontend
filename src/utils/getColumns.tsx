@@ -1,16 +1,21 @@
-import { Button, Space, TableProps, Tooltip } from "antd";
+import { Button, Space, TableProps, Tag, Tooltip } from "antd";
 import { TBookingDataType } from "../types";
 import getStatusTag from "./getStatusTag";
 import { MdCancel } from "react-icons/md";
 import UpdateDataModal from "../components/ui/UpdateDataModal";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { MdLogout } from "react-icons/md";
+import { FaHandHoldingDollar } from "react-icons/fa6";
+import { FaCircleInfo } from "react-icons/fa6";
+
 
 const getColumns = (
     data?: TBookingDataType[],
     handleAction?: (id: string, action: string) => void,
-    role?: string
+    role?: string,
+    position?: string
 ): TableProps<TBookingDataType>["columns"] => {
-    const hasDropOffDate = data!.some((record) => record.dropOffDate);
+    const isPaid = data!.some((record) => record.paid === true);
 
     const columns: TableProps<TBookingDataType>["columns"] = [
         {
@@ -29,6 +34,17 @@ const getColumns = (
             key: "pickUpDate",
         },
         {
+            title: "Pickup Time",
+            dataIndex: "pickUpTime",
+            key: "pickUpTime",
+        },
+        {
+            title: "Total Cost",
+            dataIndex: "totalCost",
+            key: "totalCost",
+            render: (totalCost) => <strong>{`$ ${totalCost}`}</strong>,
+        },
+        {
             title: "Status",
             key: "status",
             dataIndex: "status",
@@ -36,61 +52,71 @@ const getColumns = (
         },
     ];
 
-    if (hasDropOffDate) {
-        columns.splice(3, 0, {
-            title: "Dropoff Date",
-            dataIndex: "dropOffDate",
-            key: "dropOffDate",
-        });
-    }
-
-    if (hasDropOffDate) {
+    if (isPaid) {
         columns.splice(4, 0, {
-            title: "Total Cost",
-            dataIndex: "totalCost",
-            key: "totalCost",
-            render: (totalCost) => <strong>{`$ ${totalCost}`}</strong>,
+            title: "Dropoff Time",
+            dataIndex: "dropOffTime",
+            key: "dropOffTime",
         });
     }
 
-    if (!hasDropOffDate) {
+    if (!isPaid) {
         columns.push({
             title: "Action",
             key: "action",
             render: (record) => {
                 const { status, dropOffDate } = record;
-
                 if (status !== "completed" && !dropOffDate) {
                     return (
                         <Space size="middle">
                             {role && role === "admin" ? (
-                                <Tooltip title="Approved Booking">
-                                    <Button
-                                        icon={<IoIosCheckmarkCircle />}
-                                        type="text"
-                                        disabled={status === "ongoing"}
-                                        onClick={() =>
-                                            handleAction!(record.key, 'approvedBooking')
-                                        }
-                                        style={{
-                                            color: "green",
-                                            padding: "0",
-                                            fontSize: "20px",
-                                        }}
-                                    />
-                                </Tooltip>
+                                status === "pending" ? (
+                                    <Tooltip title="Approved Booking">
+                                        <Button
+                                            icon={<IoIosCheckmarkCircle />}
+                                            type="text"
+                                            onClick={() =>
+                                                handleAction!(
+                                                    record.key,
+                                                    "approvedBooking"
+                                                )
+                                            }
+                                            style={{
+                                                color: "green",
+                                                padding: "0",
+                                                fontSize: "20px",
+                                            }}
+                                        />
+                                    </Tooltip>
+                                ) : (
+                                    <Tooltip title="Return car">
+                                        <Button
+                                            icon={<MdLogout />}
+                                            type="text"
+                                            onClick={() =>
+                                                handleAction!(
+                                                    record.key,
+                                                    "returnCar"
+                                                )
+                                            }
+                                            style={{
+                                                color: "green",
+                                                padding: "0",
+                                                fontSize: "20px",
+                                            }}
+                                        />
+                                    </Tooltip>
+                                )
                             ) : (
                                 <>
                                     {status === "ongoing" ? (
-                                        <Tooltip title="Complete Booking">
+                                        <Tooltip title="Ongoing process">
                                             <Button
-                                                icon={<IoIosCheckmarkCircle />}
+                                                icon={<FaCircleInfo />}
                                                 type="text"
-                                                onClick={() =>
-                                                    handleAction!(record.key, 'completeBooking')
-                                                }
+                                                disabled={true}
                                                 style={{
-                                                    color: "green",
+                                                    color: "rgb(69 10 10)",
                                                     padding: "0",
                                                     fontSize: "20px",
                                                 }}
@@ -109,7 +135,12 @@ const getColumns = (
                                     disabled={
                                         status === "ongoing" && role === "user"
                                     }
-                                    onClick={() => handleAction!(record.key, "cancelBooking")}
+                                    onClick={() =>
+                                        handleAction!(
+                                            record.key,
+                                            "cancelBooking"
+                                        )
+                                    }
                                     style={{
                                         color: "red",
                                         padding: "0",
@@ -120,8 +151,45 @@ const getColumns = (
                         </Space>
                     );
                 } else {
-                    return null;
+                    return (
+                        <Tooltip title="Pay">
+                            <Button
+                                icon={<FaHandHoldingDollar />}
+                                type="text"
+                                disabled={
+                                    status === "complete" && role === "admin"
+                                }
+                                onClick={() => handleAction!(record.key, "pay")}
+                                style={{
+                                    color: "green",
+                                    padding: "0",
+                                    fontSize: "20px",
+                                }}
+                            />
+                        </Tooltip>
+                    );
                 }
+            },
+        });
+    }
+
+    if (position === "past") {
+        columns.pop();
+    }
+    if (position === "past") {
+        columns.push({
+            title: "Payment",
+            key: "pay",
+            render: (record) => {
+                return (
+                    <strong>
+                        {record.paid ? (
+                            <Tag color="green">Paid</Tag>
+                        ) : (
+                            <Tag color="red">Unpaid</Tag>
+                        )}
+                    </strong>
+                );
             },
         });
     }

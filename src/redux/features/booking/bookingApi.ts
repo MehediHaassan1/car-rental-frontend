@@ -84,6 +84,16 @@ const bookingApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: ['booking']
+    }),
+
+    returnCar: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/cars/return-car/${id}`,
+          method: 'PUT',
+        }
+      },
+      invalidatesTags: ['booking'],
     })
   }),
 })
@@ -97,4 +107,5 @@ export const {
   useGetSingleBookingsQuery,
   useUpdateBookingStatusMutation,
   useBookingUpdateCompleteMutation,
+  useReturnCarMutation
 } = bookingApi;

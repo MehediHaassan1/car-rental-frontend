@@ -9,7 +9,7 @@ const NavBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { token } = useAppSelector((state) => state.auth);
 
-    const { data: user } = useGetMeQuery(undefined);
+    const { data: user } = useGetMeQuery(undefined, {skip: !token});
 
     const location = useLocation();
 
@@ -32,10 +32,6 @@ const NavBar = () => {
         {
             key: "1",
             label: <Link to="/dashboard">Dashboard</Link>,
-        },
-        {
-            key: "2",
-            label: <button>Profile</button>,
         },
         {
             key: "3",

@@ -2,6 +2,7 @@ import { Table } from "antd";
 import {
     useDeleteBookingMutation,
     useGetAllBookingsQuery,
+    useReturnCarMutation,
     useUpdateBookingStatusMutation,
 } from "../../../redux/features/booking/bookingApi";
 import { TBooking, TBookingDataType } from "../../../types";
@@ -13,7 +14,7 @@ import { useAppSelector } from "../../../redux/hook";
 const AllBookings = () => {
     const { user } = useAppSelector((state) => state.auth);
     const [updateStatus] = useUpdateBookingStatusMutation();
-
+    const [returnCar] = useReturnCarMutation();
     const [deleteBooking] = useDeleteBookingMutation();
     const { data: allBooking, isLoading } = useGetAllBookingsQuery(undefined);
 
@@ -23,10 +24,15 @@ const AllBookings = () => {
         return <div>No bookings found</div>;
 
     const latestBookingsData = allBooking?.data?.filter(
-        (item: TBooking) => item.status !== "complete"
+        (item: TBooking) =>
+            item.status !== "complete" ||
+            (item.status === "complete" && item.paid === false)
     );
+
+    console.log(allBooking?.data);
+
     const completedBookingsData = allBooking.data.filter(
-        (item: TBooking) => item.status === "complete"
+        (item: TBooking) => item.paid === true && item.status === "complete"
     );
 
     const handleActions = (id: string, action: string) => {
@@ -72,14 +78,48 @@ const AllBookings = () => {
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "Yes, cancel it!",
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
                         const res = await deleteBooking(id);
                         if (res.data.success) {
                             Swal.fire({
-                                title: "Deleted!",
+                                title: "Canceled!",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                        }
+                    } catch (error) {
+                        if (error) {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Something went wrong",
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        if (action === "returnCar") {
+            Swal.fire({
+                title: "Are you sure?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, return it!",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const res = await returnCar(id);
+                        if (res.data.success) {
+                            Swal.fire({
+                                title: "Returned!",
                                 icon: "success",
                                 showConfirmButton: false,
                                 timer: 3000,
@@ -115,7 +155,8 @@ const AllBookings = () => {
     const pastBookingsColumns = getColumns(
         completedBookingsData,
         handleActions,
-        user!.role
+        user!.role,
+        "past"
     );
 
     return (

@@ -9,7 +9,6 @@ import { MdCarCrash } from "react-icons/md";
 
 const DashboardLayout = () => {
     const { data: user } = useGetMeQuery(undefined);
-    // console.log(user);
     return (
         <>
             <Helmet>
@@ -80,7 +79,7 @@ const DashboardLayout = () => {
                                     </NavLink>
                                     <NavLink
                                         className="flex items-center gap-2 border p-2 rounded-md text-txt"
-                                        to="all-bookings"
+                                        to="all-cars"
                                     >
                                         <MdCarCrash className="w-5 h-5 text-accent"></MdCarCrash>
                                         Cars

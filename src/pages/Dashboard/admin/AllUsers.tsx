@@ -32,14 +32,13 @@ const AllUsers = () => {
     }));
 
     const handleMakeAdmin = async (id: string) => {
-
         Swal.fire({
             title: "Are you sure?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: `Make admin` ,
+            confirmButtonText: `Make admin`,
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
@@ -63,43 +62,26 @@ const AllUsers = () => {
                 }
             }
         });
-
-        /* try {
-            const res = await makeAdmin(id);
-            if (res.data.success) {
-                Swal.fire(
-                    "User has been made admin!",
-                    "User's privileges have been updated.",
-                    "success"
-                );
-            }
-        } catch (error) {
-            if (error) {
-                Swal.fire(
-                    "Failed to make admin!",
-                    "User's privileges have not been updated.",
-                    "error"
-                );
-            }
-        } */
     };
 
-    const handleUpdateStatus = (id: string, active:boolean) => {
+    const handleUpdateStatus = (id: string, active: boolean) => {
         Swal.fire({
             title: "Are you sure?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: `${active ? "Active" : 'Block'}` ,
+            confirmButtonText: `${active ? "Active" : "Block"}`,
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
                     const res = await deleteUser(id);
                     if (res.data.success) {
                         Swal.fire({
-                            title: `${active ? "Activated" : 'Blocked'}`,
-                            text: `User has been ${active ? "activated" : 'blocked'}.`,
+                            title: `${active ? "Activated" : "Blocked"}`,
+                            text: `User has been ${
+                                active ? "activated" : "blocked"
+                            }.`,
                             icon: "success",
                         });
                     }
@@ -124,14 +106,18 @@ const AllUsers = () => {
             label: record.isDeleted ? (
                 <button
                     className="w-full block text-left"
-                    onClick={() => handleUpdateStatus(record.key, record.isDeleted)}
+                    onClick={() =>
+                        handleUpdateStatus(record.key, record.isDeleted)
+                    }
                 >
                     Active
                 </button>
             ) : (
                 <button
                     className="w-full block text-left"
-                    onClick={() => handleUpdateStatus(record.key, record.isDeleted)}
+                    onClick={() =>
+                        handleUpdateStatus(record.key, record.isDeleted)
+                    }
                 >
                     Block
                 </button>
@@ -190,7 +176,6 @@ const AllUsers = () => {
             title: "Action",
             key: "action",
             render: (record: DataType) => {
-                console.log(record);
                 return (
                     <Dropdown
                         trigger={["click"]}

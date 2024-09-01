@@ -65,7 +65,7 @@ const CarDetails = () => {
                         </h1>
                         <p className="text-lg font-bold  flex items-end my-3">
                             <span className="text-red-500 text-3xl">
-                                ${car?.data?.pricePerDay}
+                                ${car?.data?.pricePerHour}
                             </span>
                             /day
                         </p>
@@ -103,7 +103,9 @@ const CarDetails = () => {
                             </ul>
                         </div>
 
-                        <Link to='/booking' className="w-fit text-lg block bg-red-500 hover:bg-red-600 focus:bg-red-500 text-white font-semibold rounded
+                        <Link
+                            to="/booking"
+                            className="w-fit text-lg block bg-red-500 hover:bg-red-600 focus:bg-red-500 text-white font-semibold rounded
                 px-4 py-2 duration-300 hover:cursor-pointer"
                         >
                             Book now

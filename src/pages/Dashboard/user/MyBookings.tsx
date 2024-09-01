@@ -23,11 +23,11 @@ const MyBookings = () => {
 
     // Step 2: Filter data and map using the common function
     const upComingBookingsData = myBookings.data.filter(
-        (item: TBooking) => item.status !== "complete"
+        (item: TBooking) => item.paid === false
     );
 
     const completedBookingsData = myBookings.data.filter(
-        (item: TBooking) => item.status === "complete"
+        (item: TBooking) => item.status === "complete" && item.paid === true
     );
 
     const upcomingBookings: TBookingDataType[] =
@@ -36,7 +36,7 @@ const MyBookings = () => {
     const pastBookings: TBookingDataType[] =
         completedBookingsData.map(getBookingRowData);
 
-    const handleActions = (id: string, action: string) => {
+    const handleActions = async (id: string, action: string) => {
         if (action === "cancelBooking") {
             Swal.fire({
                 title: "Are you sure?",
@@ -99,15 +99,28 @@ const MyBookings = () => {
                 }
             });
         }
+
+        if (action === "pay") {
+            const res = await updateBookingComplete(id);
+            if (res.data.data.payment_url) {
+                window.location.href = res.data.data.payment_url;
+            }
+        }
     };
 
     const upcomingBookingsColumns = getColumns(
         upcomingBookings,
         handleActions,
-        user!.role
+        user!.role,
+        "present"
     );
 
-    const pastBookingsColumns = getColumns(pastBookings, undefined, user!.role);
+    const pastBookingsColumns = getColumns(
+        pastBookings,
+        undefined,
+        user!.role,
+        "past"
+    );
 
     return (
         <div>

@@ -5,7 +5,7 @@ export type TCar = {
   color: string
   isElectric: boolean
   features: string[]
-  pricePerDay: number
+  pricePerHour: number
   carImage: string
   isBooked: boolean
   location: string
@@ -26,6 +26,7 @@ export type TCar = {
   atxOrMtx: string
   doorCount: number
   carType: string
+  isDeleted: boolean;
 }
 
 
@@ -48,8 +49,11 @@ export type TBooking = {
   user: TUser
   car: TCar
   pickUpDate: string
+  pickUpTime: string
   dropOffDate: string
+  dropOffTime: string
   totalCost: number
+  paid: boolean;
   isCanceled: boolean
   status: 'pending' | 'ongoing' | 'complete'
   identity: string
@@ -70,5 +74,8 @@ export interface TBookingDataType {
   drivingLicenseNo: string;
   status: string;
   pickUpDate: string;
+  pickUpTime: string;
   dropOffDate: string;
+  dropOffTime: string;
+  paid: boolean;
 }
