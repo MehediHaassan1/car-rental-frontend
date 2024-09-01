@@ -45,8 +45,9 @@ const AllBookings = () => {
                         if (res.data.success) {
                             Swal.fire({
                                 title: "Approved!",
-                                text: "Your booking has been approved.",
                                 icon: "success",
+                                showConfirmButton: false,
+                                timer: 3000,
                             });
                         }
                     } catch (error) {
@@ -79,8 +80,9 @@ const AllBookings = () => {
                         if (res.data.success) {
                             Swal.fire({
                                 title: "Deleted!",
-                                text: "Your booking has been deleted.",
                                 icon: "success",
+                                showConfirmButton: false,
+                                timer: 3000,
                             });
                         }
                     } catch (error) {

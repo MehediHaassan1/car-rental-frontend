@@ -35,7 +35,6 @@ const MyBookings = () => {
 
     const pastBookings: TBookingDataType[] =
         completedBookingsData.map(getBookingRowData);
-        
 
     const handleActions = (id: string, action: string) => {
         if (action === "cancelBooking") {
@@ -53,8 +52,9 @@ const MyBookings = () => {
                         if (res.data.success) {
                             Swal.fire({
                                 title: "Deleted!",
-                                text: "Your booking has been deleted.",
                                 icon: "success",
+                                showConfirmButton: false,
+                                timer: 3000,
                             });
                         }
                     } catch (error) {
@@ -71,7 +71,7 @@ const MyBookings = () => {
             });
         }
 
-        if(action === 'completeBooking'){
+        if (action === "completeBooking") {
             Swal.fire({
                 title: "Are you sure?",
                 icon: "warning",
@@ -83,12 +83,8 @@ const MyBookings = () => {
                 if (result.isConfirmed) {
                     try {
                         const res = await updateBookingComplete(id);
-                        if (res.data.success) {
-                            Swal.fire({
-                                title: "Completed!",
-                                text: "You make a safe travel!",
-                                icon: "success",
-                            });
+                        if (res.data.data.payment_url) {
+                            window.location.href = res.data.data.payment_url;
                         }
                     } catch (error) {
                         if (error) {
@@ -111,11 +107,7 @@ const MyBookings = () => {
         user!.role
     );
 
-    const pastBookingsColumns = getColumns(
-        pastBookings,
-        undefined,
-        user!.role
-    );
+    const pastBookingsColumns = getColumns(pastBookings, undefined, user!.role);
 
     return (
         <div>

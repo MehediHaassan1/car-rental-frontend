@@ -41,6 +41,7 @@ const Testimonial = () => {
             rating: 5,
         },
     ];
+    
     return (
         <div className="custom-container w-full h-screen flex items-center justify-center">
             <div className="h-full w-full relative">

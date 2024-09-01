@@ -7,7 +7,6 @@ import { Button, Modal, Tooltip } from "antd";
 import { FaEdit } from "react-icons/fa";
 
 const UpdateDataModal = ({ data }: any) => {
-    console.log(data);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [updateBooking] = useUpdateBookingMutation();
