@@ -15,6 +15,7 @@ import Profile from "../pages/Dashboard/Profile";
 import MyBookings from "../pages/Dashboard/user/MyBookings";
 import AllUsers from "../pages/Dashboard/admin/AllUsers";
 import AllBookings from "../pages/Dashboard/admin/AllBookings";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 const router = createBrowserRouter([
     {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/contact",
-                element: <div>Contact us</div>,
+                element: <ContactUs/>,
             },
             {
                 path: "/cars",

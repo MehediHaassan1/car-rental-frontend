@@ -8,7 +8,7 @@
     box-sizing: border-box;
 }
 
-*::selection{
+*::selection {
     background-color: black;
     color: white;
 }

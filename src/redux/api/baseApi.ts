@@ -49,7 +49,7 @@ const baseQueryWithReauth: BaseQueryFn<
           })
         );
         result = await baseQuery(args, api, extraOptions);
-      } else{
+      } else {
         api.dispatch(removeUser())
       }
     }

@@ -68,7 +68,7 @@ const Login = () => {
                                         <input
                                             type="email"
                                             placeholder="john@gmail.com"
-                                            className="input input-bordered w-full focus:outline-none rounded h-10 border border-red-400 px-2 mt-2"
+                                            className="input input-bordered w-full focus:outline-none rounded h-10 border border-gray-700 px-2 mt-2"
                                             {...register("email", {
                                                 required: {
                                                     value: true,
@@ -114,7 +114,7 @@ const Login = () => {
                                                         : "password"
                                                 }
                                                 placeholder="******"
-                                                className="input input-bordered w-full focus:outline-none rounded h-10 border border-red-400 px-2"
+                                                className="input input-bordered w-full focus:outline-none rounded h-10 border border-gray-700 px-2"
                                                 {...register("password", {
                                                     required: {
                                                         value: true,

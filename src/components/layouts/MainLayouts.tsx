@@ -25,12 +25,15 @@ const MainLayouts = () => {
     }, []);
 
     useEffect(() => {
-        // Reinitialize scroll on route change
         scrollRef.current?.update();
     }, [location]);
 
     return (
-        <div ref={containerRef} data-scroll-container>
+        <div
+            ref={containerRef}
+            data-scroll-container
+            className="relative mx-auto w-full"
+        >
             <NavBar />
             <Outlet />
             <Footer />
