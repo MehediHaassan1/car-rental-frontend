@@ -9,9 +9,7 @@ const NavBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { token } = useAppSelector((state) => state.auth);
 
-    const { data: user } = useGetMeQuery(undefined, {
-        skip: !token,
-    });
+    const { data: user } = useGetMeQuery(undefined);
 
     const location = useLocation();
 

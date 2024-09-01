@@ -27,7 +27,9 @@ const Login = () => {
     const onSubmit: SubmitHandler<TLogin> = async (data) => {
         try {
             const res = await loginUser(data);
-            if (res.data.success) {
+            console.log("🚀 ~ constonSubmit:SubmitHandler<TLogin>= ~ res:", res)
+            
+            if (res?.data?.success) {
                 dispatch(
                     setUser({ user: res?.data.data, token: res?.data.token })
                 );

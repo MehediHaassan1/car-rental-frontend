@@ -6,15 +6,17 @@ import { TCar } from "../../types";
 const Cars = () => {
     const [carType, setCarType] = useState("");
     const [price, setPrice] = useState<number>(100);
-    const { data } = useGetAllCarsQuery({ price, carType });
-    const cars:TCar[] = data?.data;
+    const { data, isLoading } = useGetAllCarsQuery({ price, carType });
+    const cars: TCar[] = data?.data;
+
+    if (isLoading) return <div>Loading...</div>;
 
     const handlePriceRange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const parsedValue = parseInt(e.target.value);
         setPrice(parsedValue);
     };
 
-    console.log(carType)
+    console.log(carType);
 
     return (
         <>
@@ -55,9 +57,7 @@ const Cars = () => {
                                 id="car-type"
                                 className="bg-white border  text-gray-900 text-sm rounded block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white shadow-lg mb-10"
                             >
-                                <option value=''>
-                                    Car Type
-                                </option>
+                                <option value="">Car Type</option>
                                 <option value="sedan">Sedan</option>
                                 <option value="suv">SUV</option>
                                 <option value="hatchback">Hatchback</option>
