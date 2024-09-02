@@ -30,9 +30,7 @@ const MainLayouts = () => {
 
     return (
         <div
-            ref={containerRef}
-            data-scroll-container
-            className="relative mx-auto w-full"
+            
         >
             <NavBar />
             <Outlet />

@@ -4,7 +4,7 @@ import { RootState } from '../store';
 import { removeUser, setUser } from '../features/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:8000/api",
+  baseUrl: "https://car-rental-reservation-system-backend.vercel.app/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
@@ -34,7 +34,7 @@ const baseQueryWithReauth: BaseQueryFn<
     if (result?.error?.status === 401) {
       console.log('sending refresh token')
 
-      const res = await fetch('http://localhost:8000/api/auth/refresh-token ', {
+      const res = await fetch('https://car-rental-reservation-system-backend.vercel.app/api/auth/refresh-token ', {
         method: 'POST',
         credentials: 'include',
       });

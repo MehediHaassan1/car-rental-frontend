@@ -197,7 +197,12 @@ const AllUsers = () => {
             <button className="text-2xl font-bold w-fit pb-2 border-b-2 border-gray-700">
                 All Users
             </button>
-            <Table columns={columns} dataSource={dataSource} rowKey="key" />
+            <Table
+                scroll={{ x: "100%" }}
+                columns={columns}
+                dataSource={dataSource}
+                rowKey="key"
+            />
         </div>
     );
 };

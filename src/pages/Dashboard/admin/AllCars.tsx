@@ -189,10 +189,6 @@ const AllCars = () => {
         <div>
             <div className="flex items-center justify-between border-b-2 border-gray-300 pb-3">
                 <h1 className="text-3xl tracking-wide font-bold">All Cars</h1>
-                {/* <button className="bg-red-500 rounded py-1 px-3 font-bold hover:scale-110 duration-300 flex items-center justify-around gap-1">
-                    <FaPlus />
-                    Add Car
-                </button> */}
                 <CreateCarModal />
             </div>
             <Table

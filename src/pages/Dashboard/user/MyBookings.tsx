@@ -134,7 +134,11 @@ const MyBookings = () => {
             <h1 className="text-2xl font-bold w-fit border-b-2 border-gray-700 pb-2">
                 Booking History
             </h1>
-            <Table columns={pastBookingsColumns} dataSource={pastBookings} />
+            <Table
+                scroll={{ x: "100%" }}
+                columns={pastBookingsColumns}
+                dataSource={pastBookings}
+            />
         </div>
     );
 };
