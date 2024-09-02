@@ -79,3 +79,12 @@ export interface TBookingDataType {
   dropOffTime: string;
   paid: boolean;
 }
+
+export interface TAdminCarsData {
+  key: React.Key;
+  name: string;
+  carType: string;
+  isBooked: boolean;
+  carImage: string;
+  isDeleted: boolean;
+}

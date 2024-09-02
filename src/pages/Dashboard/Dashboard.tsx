@@ -1,4 +1,8 @@
+import { useAppSelector } from "../../redux/hook";
+
 const Dashboard = () => {
+    const {user} = useAppSelector(state => state.auth)
+    console.log(user)
     return (
         <div className="flex flex-col items-center justify-center space-y-8 p-8">
             <h1 className="text-3xl font-bold">

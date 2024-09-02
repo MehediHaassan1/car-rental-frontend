@@ -3,26 +3,20 @@ import {
     useGetAllCarsQuery,
 } from "../../../redux/features/car/carApi";
 import { Button, Dropdown, Menu, Table, TableProps, Tag } from "antd";
-import { TCar } from "../../../types";
+import { TAdminCarsData, TCar } from "../../../types";
 import { FaEllipsisV } from "react-icons/fa";
 import Swal from "sweetalert2";
 import CreateCarModal from "./CreateCarModal";
+import UpdateCarModal from "./UpdateCarModal";
 
-interface DataType {
-    key: React.Key;
-    name: string;
-    carType: string;
-    isBooked: boolean;
-    carImage: string;
-    isDeleted: boolean;
-}
+
 
 const AllCars = () => {
     const [deleteCar] = useDeleteCarMutation();
     const { data } = useGetAllCarsQuery({ price: 0 });
     const cars: TCar[] = data?.data;
 
-    const carsData: DataType[] = cars?.map(
+    const carsData: TAdminCarsData[] = cars?.map(
         ({
             _id,
             carImage,
@@ -41,9 +35,8 @@ const AllCars = () => {
             isDeleted,
         })
     );
-    console.log(carsData);
 
-    const getMenuItems = (record: DataType) => [
+    const getMenuItems = (record: TAdminCarsData) => [
         {
             key: "delete",
             label: record.isDeleted ? (
@@ -73,22 +66,15 @@ const AllCars = () => {
             ),
         },
         {
-            key: "makeAdmin",
-            label: (
-                <button
-                    className="w-full block text-left"
-                    // onClick={() => handleMakeAdmin(record.key)}
-                >
-                    Update
-                </button>
-            ),
+            key: "update-car",
+            label: <UpdateCarModal data={record} />,
         },
     ];
 
     // Define Menu component with items
-    const getMenu = (record: DataType) => <Menu items={getMenuItems(record)} />;
+    const getMenu = (record: TAdminCarsData) => <Menu items={getMenuItems(record)} />;
 
-    const columns: TableProps<DataType>["columns"] = [
+    const columns: TableProps<TAdminCarsData>["columns"] = [
         {
             title: "Image",
             dataIndex: "carImage",
@@ -145,7 +131,7 @@ const AllCars = () => {
         {
             title: "Action",
             key: "action",
-            render: (record: DataType) => {
+            render: (record: TAdminCarsData) => {
                 return (
                     <Dropdown
                         trigger={["click"]}
@@ -207,9 +193,14 @@ const AllCars = () => {
                     <FaPlus />
                     Add Car
                 </button> */}
-                <CreateCarModal/>
+                <CreateCarModal />
             </div>
-            <Table scroll={{ x: '100%' }} columns={columns} dataSource={carsData} />;
+            <Table
+                scroll={{ x: "100%" }}
+                columns={columns}
+                dataSource={carsData}
+            />
+            ;
         </div>
     );
 };
