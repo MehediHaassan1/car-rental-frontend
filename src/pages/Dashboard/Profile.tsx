@@ -74,7 +74,7 @@ const Profile = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col md:flex-row items-center justify-between gap-5">
                         <div className="w-full md:w-1/2">
-                            <label className="form-control w-full">
+                            <label className="w-full">
                                 <div className="label">
                                     <span className="label-text text-lg font-semibold">
                                         Name
@@ -90,7 +90,7 @@ const Profile = () => {
                             </label>
                         </div>
                         <div className="w-full md:w-1/2">
-                            <label className="form-control w-full">
+                            <label className="w-full">
                                 <div className="label">
                                     <span className="label-text text-lg font-semibold">
                                         Email
@@ -108,7 +108,7 @@ const Profile = () => {
 
                     <div className="flex flex-col md:flex-row items-center justify-between gap-5 mt-4">
                         <div className="w-full md:w-1/2">
-                            <label className="form-control w-full">
+                            <label className="w-full">
                                 <div className="label">
                                     <span className="label-text text-lg font-semibold">
                                         Phone Number
@@ -133,7 +133,7 @@ const Profile = () => {
                             </label>
                         </div>
                         <div className="w-full md:w-1/2">
-                            <label className="form-control w-full">
+                            <label className="w-full">
                                 <div className="label">
                                     <span className="label-text text-lg font-semibold">
                                         Address
@@ -152,7 +152,7 @@ const Profile = () => {
                     </div>
 
                     <div className="mt-5">
-                        <label className="form-control w-full">
+                        <label className="w-full">
                             <div className="label">
                                 <span className="label-text text-lg font-semibold">
                                     Image

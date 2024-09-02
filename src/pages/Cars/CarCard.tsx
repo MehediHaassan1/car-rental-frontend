@@ -21,7 +21,7 @@ const CarCard = ({ car }: { car: TCar }) => {
                         <span className="text-red-500 text-xl">
                             ${car.pricePerHour}
                         </span>
-                        /Day
+                        /hour
                     </div>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">

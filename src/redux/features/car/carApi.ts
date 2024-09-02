@@ -37,7 +37,7 @@ const carApi = baseApi.injectEndpoints({
     searchCars: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
-        
+
         if (args?.carType) {
           params.append('carType', args.carType);
         }
@@ -54,8 +54,34 @@ const carApi = baseApi.injectEndpoints({
         }
       },
       providesTags: ['car'],
+    }),
+    deleteCar: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `/cars/delete-car/${payload.id}`,
+          method: "PUT",
+          body: { isDeleted: payload.status },
+        }
+      },
+      invalidatesTags: ['car'],
+    }),
+    addCar: builder.mutation({
+      query: (payload) => {
+        return {
+          url: '/cars',
+          method: 'POST',
+          body: payload
+        }
+      },
+      invalidatesTags: ['car'],
     })
   }),
 })
 
-export const { useGetAllCarsQuery, useGetSingleCarQuery, useSearchCarsQuery } = carApi;
+export const { 
+  useGetAllCarsQuery, 
+  useGetSingleCarQuery, 
+  useSearchCarsQuery, 
+  useDeleteCarMutation ,
+  useAddCarMutation,
+} = carApi;

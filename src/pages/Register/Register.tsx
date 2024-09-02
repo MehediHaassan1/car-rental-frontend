@@ -70,7 +70,6 @@ const Register = () => {
             });
         }
 
-        console.log(userData);
     };
 
     return (

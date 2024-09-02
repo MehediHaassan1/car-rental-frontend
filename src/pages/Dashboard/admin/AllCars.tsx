@@ -1,8 +1,12 @@
-import { FaPlus } from "react-icons/fa6";
-import { useGetAllCarsQuery } from "../../../redux/features/car/carApi";
-import { Dropdown, Menu, Table, TableProps, Tag } from "antd";
+import {
+    useDeleteCarMutation,
+    useGetAllCarsQuery,
+} from "../../../redux/features/car/carApi";
+import { Button, Dropdown, Menu, Table, TableProps, Tag } from "antd";
 import { TCar } from "../../../types";
 import { FaEllipsisV } from "react-icons/fa";
+import Swal from "sweetalert2";
+import CreateCarModal from "./CreateCarModal";
 
 interface DataType {
     key: React.Key;
@@ -14,9 +18,9 @@ interface DataType {
 }
 
 const AllCars = () => {
+    const [deleteCar] = useDeleteCarMutation();
     const { data } = useGetAllCarsQuery({ price: 0 });
     const cars: TCar[] = data?.data;
-    // console.log(cars);
 
     const carsData: DataType[] = cars?.map(
         ({
@@ -28,7 +32,7 @@ const AllCars = () => {
             pricePerHour,
             isDeleted,
         }) => ({
-            key: _id,
+            key: _id as string,
             carImage,
             name,
             carType,
@@ -45,18 +49,24 @@ const AllCars = () => {
             label: record.isDeleted ? (
                 <button
                     className="w-full block text-left"
-                    // onClick={() =>
-                    //     handleUpdateStatus(record.key, record.isDeleted)
-                    // }
+                    onClick={() =>
+                        handleUpdateStatus(
+                            record.key as string,
+                            record.isDeleted
+                        )
+                    }
                 >
                     Active
                 </button>
             ) : (
                 <button
                     className="w-full block text-left"
-                    // onClick={() =>
-                    //     handleUpdateStatus(record.key, record.isDeleted)
-                    // }
+                    onClick={() =>
+                        handleUpdateStatus(
+                            record.key as string,
+                            record.isDeleted
+                        )
+                    }
                 >
                     Delete
                 </button>
@@ -98,7 +108,7 @@ const AllCars = () => {
             key: "carType",
         },
         {
-            title: "Price/Day",
+            title: "Price/Hour",
             dataIndex: "pricePerHour",
             key: "pricePerHour",
             render: (pricePerHour: number) => {
@@ -143,23 +153,63 @@ const AllCars = () => {
                         placement="bottomRight"
                         className="cursor-pointer"
                     >
-                        <FaEllipsisV />
+                        <Button>
+                            <FaEllipsisV />
+                        </Button>
                     </Dropdown>
                 );
             },
         },
     ];
 
+    const handleUpdateStatus = (id: string, isDeleted: boolean) => {
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `${isDeleted ? "Active" : "Delete"}`,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await deleteCar({ id, status: isDeleted });
+                    if (res.data.success) {
+                        Swal.fire({
+                            title: `${isDeleted ? "Active" : "Delete"}`,
+                            text: `Car has been ${
+                                isDeleted ? "Active" : "Delete"
+                            }.`,
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 3000,
+                        });
+                    }
+                } catch (error) {
+                    if (error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Something went wrong",
+                            showConfirmButton: false,
+                            timer: 3000,
+                        });
+                    }
+                }
+            }
+        });
+    };
+
     return (
         <div>
             <div className="flex items-center justify-between border-b-2 border-gray-300 pb-3">
                 <h1 className="text-3xl tracking-wide font-bold">All Cars</h1>
-                <button className="bg-red-500 rounded py-1 px-3 font-bold hover:scale-110 duration-300 flex items-center justify-around gap-1">
+                {/* <button className="bg-red-500 rounded py-1 px-3 font-bold hover:scale-110 duration-300 flex items-center justify-around gap-1">
                     <FaPlus />
                     Add Car
-                </button>
+                </button> */}
+                <CreateCarModal/>
             </div>
-            <Table columns={columns} dataSource={carsData} />;
+            <Table scroll={{ x: '100%' }} columns={columns} dataSource={carsData} />;
         </div>
     );
 };

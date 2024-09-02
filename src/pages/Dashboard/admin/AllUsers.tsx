@@ -1,4 +1,4 @@
-import { Dropdown, Menu, Table, Avatar } from "antd";
+import { Dropdown, Menu, Table, Avatar, Button } from "antd";
 import {
     useDeleteUsersMutation,
     useGetAllUsersQuery,
@@ -183,7 +183,9 @@ const AllUsers = () => {
                         placement="bottomRight"
                         className="cursor-pointer"
                     >
-                        <FaEllipsisV />
+                        <Button>
+                            <FaEllipsisV />
+                        </Button>
                     </Dropdown>
                 );
             },
@@ -192,9 +194,9 @@ const AllUsers = () => {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold w-fit pb-2 border-b-2 border-gray-700">
+            <button className="text-2xl font-bold w-fit pb-2 border-b-2 border-gray-700">
                 All Users
-            </h1>
+            </button>
             <Table columns={columns} dataSource={dataSource} rowKey="key" />
         </div>
     );
