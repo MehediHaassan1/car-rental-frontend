@@ -3,19 +3,14 @@ import { baseApi } from "../../api/baseApi";
 const carApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllCars: builder.query({
-      query: ({ name, carType, price, location }) => {
+      query: ({ carType, price }) => {
         const params = new URLSearchParams();
-        if (name) {
-          params.append('name', name);
-        }
+
         if (carType) {
           params.append('carType', carType);
         }
-        if (price > 100) {
+        if (price > 0) {
           params.append('price', price);
-        }
-        if (location) {
-          params.append('location', location);
         }
         return {
           url: '/cars',
@@ -25,7 +20,7 @@ const carApi = baseApi.injectEndpoints({
       },
       providesTags: ['car'],
     }),
-    
+
     getSingleCar: builder.query({
       query: (id) => {
         return {
@@ -81,7 +76,7 @@ const carApi = baseApi.injectEndpoints({
     }),
 
     updateCar: builder.mutation({
-      query: (payload) =>{
+      query: (payload) => {
         console.log(payload)
         return {
           url: `/cars/${payload.id}`,
@@ -95,11 +90,11 @@ const carApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { 
-  useGetAllCarsQuery, 
-  useGetSingleCarQuery, 
-  useSearchCarsQuery, 
-  useDeleteCarMutation ,
+export const {
+  useGetAllCarsQuery,
+  useGetSingleCarQuery,
+  useSearchCarsQuery,
+  useDeleteCarMutation,
   useAddCarMutation,
   useUpdateCarMutation,
 } = carApi;

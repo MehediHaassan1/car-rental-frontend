@@ -165,6 +165,7 @@ const AllBookings = () => {
                 Latest Bookings
             </h1>
             <Table
+                scroll={{ x: "100%" }}
                 columns={upcomingBookingsColumns}
                 dataSource={upcomingBookings}
             />

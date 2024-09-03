@@ -152,7 +152,8 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} scroll={{ x: "100%" }} dataSource={data} />
+            ;
         </div>
     );
 };

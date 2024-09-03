@@ -2,6 +2,7 @@ import { FaHandHoldingDollar } from "react-icons/fa6";
 import { FaUserCheck } from "react-icons/fa";
 import { IoTime } from "react-icons/io5";
 import { MdAddCall } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const ChooseUs = () => {
     return (
@@ -65,18 +66,6 @@ const ChooseUs = () => {
                                     </p>
                                 </div>
                             </div>
-                            {/* <div className="flex gap-4 items-center justify-start">
-                            <div className="p-2 bg-red-100 rounded bg-opacity-80">
-                                <FaHandHoldingDollar className="size-8 text-red-500 " />
-                            </div>
-                            <div>
-                                <h1 className="text-lg font-semibold">Best price guaranteed</h1>
-                                <p className="text-[#6D6D6D] w-3/4 mt-2">
-                                    Find a lower price? We’ll refund you 100% of
-                                    the difference.
-                                </p>
-                            </div>
-                        </div> */}
                         </div>
                     </div>
                 </div>
@@ -109,9 +98,12 @@ const ChooseUs = () => {
                                     </p>
                                 </span>
                             </div>
-                            <button className="bg-red-600 rounded duration-300 text-white px-4 py-2 hover:bg-red-700 transition">
+                            <Link
+                                to="/cars"
+                                className="bg-red-600 rounded duration-300 text-white px-4 py-2 hover:bg-red-700 transition"
+                            >
                                 Book Now
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ import { TCar } from "../../types";
 
 const Cars = () => {
     const [carType, setCarType] = useState("");
-    const [price, setPrice] = useState<number>(100);
+    const [price, setPrice] = useState<number>(0);
     const { data, isLoading } = useGetAllCarsQuery({ price, carType });
     const cars: TCar[] = data?.data;
 
@@ -16,7 +16,7 @@ const Cars = () => {
         setPrice(parsedValue);
     };
 
-    console.log(carType);
+    console.log(price);
 
     return (
         <>
@@ -35,15 +35,15 @@ const Cars = () => {
                                     htmlFor="minmax-range"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 >
-                                    $2000
+                                    $500
                                 </label>
                             </div>
                             <input
                                 onChange={handlePriceRange}
                                 id="minmax-range"
                                 type="range"
-                                min="100"
-                                max="2000"
+                                min="0"
+                                max="500"
                                 value={price}
                                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                             />

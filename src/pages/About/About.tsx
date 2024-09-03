@@ -4,6 +4,7 @@ import { BsArrowRight } from "react-icons/bs";
 import { BiSolidDollarCircle } from "react-icons/bi";
 import { MdAddCall } from "react-icons/md";
 import CompanyHistory from "./CompanyHistory";
+import { Link } from "react-router-dom";
 const AboutUs = () => {
     return (
         <div>
@@ -111,9 +112,9 @@ const AboutUs = () => {
                                     </p>
                                 </span>
                             </div>
-                            <button className="bg-red-600 rounded duration-300 text-white px-4 py-2 hover:bg-red-700 transition">
+                            <Link to='/cars' className="bg-red-600 rounded duration-300 text-white px-4 py-2 hover:bg-red-700 transition">
                                 Book Now
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -122,14 +123,15 @@ const AboutUs = () => {
             <CompanyHistory />
 
             {/* Meet our Team */}
+
             <section className="bg-white text-center custom-container mt-10">
                 <h2 className="text-[clamp(2.5rem,2.4286rem+2.2857vw,4rem)] font-semibold leading-none mb-4 capitalize text-gray-900">
-                    our team
+                    Meet Our Team
                 </h2>
                 <p className="max-w-3xl mx-auto text-[clamp(0.875rem,0.825rem+0.3vw,1.2rem)] leading-[1.7] text-gray-700">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Animi, praesentium veritatis voluptatibus ut consequuntur
-                    quas consequatur omnis id rem obcaecati.
+                    Our team is comprised of passionate and talented individuals
+                    dedicated to delivering the best car rental experience. Get
+                    to know the people who make it all possible.
                 </p>
                 <div className="mt-16 grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-[1.5rem] md:gap-[2rem] lg:gap-[3rem]">
                     <div className="relative text-left">
@@ -137,123 +139,126 @@ const AboutUs = () => {
                             <img
                                 className="filter grayscale transition duration-500 ease-in-out hover:filter-none h-96 w-full object-cover"
                                 src="https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                alt="Noah Wilson"
+                                alt="Emily Carter"
                             />
                         </div>
-                        <a
-                            href="#"
+                       <Link
+                            to="https://instagram.com/emilycarter"
                             className="absolute left-0 bg-gray-900 p-4 inline-block text-white text-lg sm:text-xl lg:text-2xl hover:text-red-600 transition-all"
                         >
                             <FaInstagram />
-                        </a>
+                       </Link>
                         <div className="ml-auto max-w-[90%]">
-                            <a
-                                href="#"
+                           <Link
+                               to='/'
                                 className="block bg-white p-[4rem_2rem_0_2.8rem] sm:p-[4.5rem_2rem_0_3rem] lg:p-[4.5rem_2rem_0_3.2rem] transition duration-500 ease-in-out hover:bg-red-100"
                             >
                                 <h3 className="text-[clamp(1rem,1.1071rem+0.1714vw,1.2rem)] sm:text-[clamp(1.1rem,1.1071rem+0.1714vw,1.3rem)] font-extrabold capitalize text-red-900">
-                                    noah wilson
+                                    Emily Carter
                                 </h3>
                                 <p className="text-sm sm:text-base capitalize text-gray-700">
-                                    marketing manager
+                                    Chief Marketing Officer
                                 </p>
-                                <div className="text-right ">
+                                <div className="text-right">
                                     <BsArrowRight className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 text-red-600" />
                                 </div>
-                            </a>
+                           </Link>
                         </div>
                     </div>
+
                     <div className="relative text-left">
                         <div className="overflow-hidden rounded-t-md">
                             <img
                                 className="filter grayscale transition duration-500 ease-in-out hover:filter-none h-96 w-full object-cover"
                                 src="https://images.pexels.com/photos/775358/pexels-photo-775358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                alt="Noah Wilson"
+                                alt="Michael Smith"
                             />
                         </div>
-                        <a
-                            href="#"
+                       <Link
+                            to="https://instagram.com/michaelsmith"
                             className="absolute left-0 bg-gray-900 p-4 inline-block text-white text-lg sm:text-xl lg:text-2xl hover:text-red-600 transition-all"
                         >
                             <FaInstagram />
-                        </a>
+                       </Link>
                         <div className="ml-auto max-w-[90%]">
-                            <a
-                                href="#"
+                           <Link
+                               to='/'
                                 className="block bg-white p-[4rem_2rem_0_2.8rem] sm:p-[4.5rem_2rem_0_3rem] lg:p-[4.5rem_2rem_0_3.2rem] transition duration-500 ease-in-out hover:bg-red-100"
                             >
                                 <h3 className="text-[clamp(1rem,1.1071rem+0.1714vw,1.2rem)] sm:text-[clamp(1.1rem,1.1071rem+0.1714vw,1.3rem)] font-extrabold capitalize text-red-900">
-                                    noah wilson
+                                    Michael Smith
                                 </h3>
                                 <p className="text-sm sm:text-base capitalize text-gray-700">
-                                    marketing manager
+                                    Head of Operations
                                 </p>
-                                <div className="text-right ">
+                                <div className="text-right">
                                     <BsArrowRight className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 text-red-600" />
                                 </div>
-                            </a>
+                           </Link>
                         </div>
                     </div>
+
                     <div className="relative text-left">
                         <div className="overflow-hidden rounded-t-md">
                             <img
                                 className="filter grayscale transition duration-500 ease-in-out hover:filter-none h-96 w-full object-cover"
                                 src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="Noah Wilson"
+                                alt="Sophia Lee"
                             />
                         </div>
-                        <a
-                            href="#"
+                       <Link
+                            to="https://instagram.com/sophialee"
                             className="absolute left-0 bg-gray-900 p-4 inline-block text-white text-lg sm:text-xl lg:text-2xl hover:text-red-600 transition-all"
                         >
                             <FaInstagram />
-                        </a>
+                       </Link>
                         <div className="ml-auto max-w-[90%]">
-                            <a
-                                href="#"
+                           <Link
+                               to='/'
                                 className="block bg-white p-[4rem_2rem_0_2.8rem] sm:p-[4.5rem_2rem_0_3rem] lg:p-[4.5rem_2rem_0_3.2rem] transition duration-500 ease-in-out hover:bg-red-100"
                             >
                                 <h3 className="text-[clamp(1rem,1.1071rem+0.1714vw,1.2rem)] sm:text-[clamp(1.1rem,1.1071rem+0.1714vw,1.3rem)] font-extrabold capitalize text-red-900">
-                                    noah wilson
+                                    Sophia Lee
                                 </h3>
                                 <p className="text-sm sm:text-base capitalize text-gray-700">
-                                    marketing manager
+                                    Chief Technology Officer
                                 </p>
-                                <div className="text-right ">
+                                <div className="text-right">
                                     <BsArrowRight className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 text-red-600" />
                                 </div>
-                            </a>
+                           </Link>
                         </div>
                     </div>
+
                     <div className="relative text-left">
                         <div className="overflow-hidden rounded-t-md">
                             <img
                                 className="filter grayscale transition duration-500 ease-in-out hover:filter-none h-96 w-full object-cover"
                                 src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                                alt="Noah Wilson"
+                                alt="Liam Johnson"
                             />
                         </div>
-                        <a
-                            href="#"
+                       <Link
+                            to="https://instagram.com/liamjohnson"
                             className="absolute left-0 bg-gray-900 p-4 inline-block text-white text-lg sm:text-xl lg:text-2xl hover:text-red-600 transition-all"
                         >
                             <FaInstagram />
-                        </a>
+                       </Link>
                         <div className="ml-auto max-w-[90%]">
-                            <a
-                                href="#"
+                           <Link
+                               to='/'
                                 className="block bg-white p-[4rem_2rem_0_2.8rem] sm:p-[4.5rem_2rem_0_3rem] lg:p-[4.5rem_2rem_0_3.2rem] transition duration-500 ease-in-out hover:bg-red-100"
                             >
                                 <h3 className="text-[clamp(1rem,1.1071rem+0.1714vw,1.2rem)] sm:text-[clamp(1.1rem,1.1071rem+0.1714vw,1.3rem)] font-extrabold capitalize text-red-900">
-                                    noah wilson
+                                    Liam Johnson
                                 </h3>
                                 <p className="text-sm sm:text-base capitalize text-gray-700">
-                                    marketing manager
+                                    Customer Relations Director
                                 </p>
-                                <div className="text-right ">
+                                <div className="text-right">
                                     <BsArrowRight className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 text-red-600" />
                                 </div>
-                            </a>
+                           </Link>
                         </div>
                     </div>
                 </div>

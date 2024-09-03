@@ -2,6 +2,7 @@ import { FaDribbble, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa";
 import { FaFacebook, FaLocationDot } from "react-icons/fa6";
 import { MdCall } from "react-icons/md";
 import { IoMdMail } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -11,21 +12,52 @@ const Footer = () => {
                     <div>
                         <img
                             src="https://i.ibb.co/hX4MwS7/removedbglogo.png"
-                            alt="logo"
+                            alt="RideEase Logo"
                         />
 
                         <p className="max-w-md mx-auto mt-6 leading-relaxed text-center text-gray-400 sm:max-w-xs sm:mx-0 sm:text-left">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Incidunt consequuntur amet culpa cum itaque
-                            neque.
+                            RideEase offers top-notch car rental services,
+                            ensuring a seamless experience from booking to
+                            return. We take pride in providing well-maintained
+                            vehicles and exceptional customer service.
                         </p>
 
                         <ul className="flex justify-center gap-6 mt-8 md:gap-8 sm:justify-start">
-                            <FaFacebook className="text-2xl text-red-400" />
-                            <FaInstagram className="text-2xl text-red-400" />
-                            <FaTwitter className="text-2xl text-red-400" />
-                            <FaGithub className="text-2xl text-red-400" />
-                            <FaDribbble className="text-2xl text-red-400" />
+                            <Link
+                                to="https://www.facebook.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <FaFacebook className="text-2xl text-red-400" />
+                            </Link>
+                            <Link
+                                to="https://www.instagram.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <FaInstagram className="text-2xl text-red-400" />
+                            </Link>
+                            <Link
+                                to="https://www.twitter.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <FaTwitter className="text-2xl text-red-400" />
+                            </Link>
+                            <Link
+                                to="https://www.github.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <FaGithub className="text-2xl text-red-400" />
+                            </Link>
+                            <Link
+                                to="https://www.dribbble.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <FaDribbble className="text-2xl text-red-400" />
+                            </Link>
                         </ul>
                     </div>
 
@@ -38,39 +70,39 @@ const Footer = () => {
                             <nav className="mt-8">
                                 <ul className="space-y-4 text-sm">
                                     <li>
-                                        <a
+                                        <Link
                                             className="text-white transition hover:text-white/75"
-                                            href="/"
+                                            to="/about"
                                         >
-                                            Company History
-                                        </a>
+                                            Our Story
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a
+                                        <Link
                                             className="text-white transition hover:text-white/75"
-                                            href="/"
+                                            to="/team"
                                         >
                                             Meet the Team
-                                        </a>
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a
+                                        <Link
                                             className="text-white transition hover:text-white/75"
-                                            href="/"
-                                        >
-                                            Employee Handbook
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a
-                                            className="text-white transition hover:text-white/75"
-                                            href="/"
+                                            to="/careers"
                                         >
                                             Careers
-                                        </a>
+                                        </Link>
+                                    </li>
+
+                                    <li>
+                                        <Link
+                                            className="text-white transition hover:text-white/75"
+                                            to="/blog"
+                                        >
+                                            Blog
+                                        </Link>
                                     </li>
                                 </ul>
                             </nav>
@@ -84,39 +116,39 @@ const Footer = () => {
                             <nav className="mt-8">
                                 <ul className="space-y-4 text-sm">
                                     <li>
-                                        <a
+                                        <Link
                                             className="text-white transition hover:text-white/75"
-                                            href="/"
+                                            to="/services/rental"
                                         >
-                                            Web Development
-                                        </a>
+                                            Car Rental
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a
+                                        <Link
                                             className="text-white transition hover:text-white/75"
-                                            href="/"
+                                            to="/services/maintenance"
                                         >
-                                            Web Design
-                                        </a>
+                                            Vehicle Maintenance
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a
+                                        <Link
                                             className="text-white transition hover:text-white/75"
-                                            href="/"
+                                            to="/services/support"
                                         >
-                                            Marketing
-                                        </a>
+                                            24/7 Support
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a
+                                        <Link
                                             className="text-white transition hover:text-white/75"
-                                            href="/"
+                                            to="/services/insurance"
                                         >
-                                            Google Ads
-                                        </a>
+                                            Insurance Plans
+                                        </Link>
                                     </li>
                                 </ul>
                             </nav>
@@ -130,27 +162,27 @@ const Footer = () => {
                             <nav className="mt-8">
                                 <ul className="space-y-4 text-sm">
                                     <li>
-                                        <a
+                                        <Link
                                             className="text-white transition hover:text-white/75"
-                                            href="/"
+                                            to="/faqs"
                                         >
                                             FAQs
-                                        </a>
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a
+                                        <Link
                                             className="text-white transition hover:text-white/75"
-                                            href="/"
+                                            to="/support"
                                         >
-                                            Support
-                                        </a>
+                                            Customer Support
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <a
+                                        <Link
                                             className="flex group justify-center sm:justify-start gap-1.5"
-                                            href="/"
+                                            to="/live-chat"
                                         >
                                             <span className="text-white transition group-hover:text-white/75">
                                                 Live Chat
@@ -160,7 +192,7 @@ const Footer = () => {
                                                 <span className="absolute inline-flex w-full h-full bg-teal-400 rounded-full opacity-75 animate-ping"></span>
                                                 <span className="relative inline-flex w-2 h-2 bg-teal-500 rounded-full"></span>
                                             </span>
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </nav>
@@ -173,36 +205,36 @@ const Footer = () => {
 
                             <ul className="mt-8 space-y-4 text-sm">
                                 <li>
-                                    <a
+                                    <Link
                                         className="flex items-center justify-center sm:justify-start gap-1.5 group"
-                                        href="/"
+                                        to="mailto:info@rideease.com"
                                     >
                                         <IoMdMail className="text-xl text-gray-300" />
                                         <span className="text-white transition group-hover:text-white/75">
-                                            john@doe.com
+                                            info@rideease.com
                                         </span>
-                                    </a>
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a
+                                    <Link
                                         className="flex items-center justify-center sm:justify-start gap-1.5 group"
-                                        href="/"
+                                        to="tel:+123456789"
                                     >
                                         <MdCall className="text-xl text-gray-300" />
 
                                         <span className="text-white transition group-hover:text-white/75">
-                                            0123456789
+                                            +1 234 567 89
                                         </span>
-                                    </a>
+                                    </Link>
                                 </li>
 
                                 <li className="flex items-start justify-center gap-1.5 sm:justify-start">
-                                    <FaLocationDot className="text-xl  text-gray-300" />
+                                    <FaLocationDot className="text-xl text-gray-300" />
 
-                                    <address className="-mt-0.5 not-italic text-white">
-                                        213 Lane, London, United Kingdom
-                                    </address>
+                                    <p className="-mt-0.5 not-italic text-white">
+                                        123 Main Street, London, United Kingdom
+                                    </p>
                                 </li>
                             </ul>
                         </div>
@@ -216,21 +248,21 @@ const Footer = () => {
                                 All rights reserved.
                             </span>
 
-                            <a
+                            <Link
                                 className="inline-block text-teal-500 underline transition hover:text-teal-500/75"
-                                href="/"
+                                to="/terms"
                             >
                                 Terms & Conditions
-                            </a>
+                            </Link>
 
                             <span>&middot;</span>
 
-                            <a
+                            <Link
                                 className="inline-block text-teal-500 underline transition hover:text-teal-500/75"
-                                href="/"
+                                to="/privacy"
                             >
                                 Privacy Policy
-                            </a>
+                            </Link>
                         </p>
 
                         <p className="mt-4 text-sm text-gray-500 sm:order-first sm:mt-0">

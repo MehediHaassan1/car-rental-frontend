@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const sliderItems = [
     {
@@ -77,9 +78,12 @@ const Hero = () => {
                                     <p className="text-sm md:text-lg lg:text-xl mb-8">
                                         {item.subtitle2}
                                     </p>
-                                    <button className="bg-red-500 rounded py-3 px-5 text-xl hover:scale-110 duration-300">
+                                    <Link
+                                        to="/cars"
+                                        className="bg-red-500 rounded py-3 px-5 text-xl hover:scale-110 duration-300"
+                                    >
                                         Book now
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

@@ -67,7 +67,7 @@ const CarDetails = () => {
                             <span className="text-red-500 text-3xl">
                                 ${car?.data?.pricePerHour}
                             </span>
-                            /day
+                            /hour
                         </p>
                         <div className="w-full lg:w-1/2 my-3">
                             <div className="w-full flex items-center gap-2">

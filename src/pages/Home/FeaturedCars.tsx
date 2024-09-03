@@ -76,7 +76,7 @@ const FeaturedCar = () => {
                                                 <span className="text-3xl font-semibold">
                                                     ${item.pricePerHour}
                                                 </span>
-                                                /day
+                                                /hour
                                             </h3>
                                             <Link
                                                 to={`/car/${item._id}`}

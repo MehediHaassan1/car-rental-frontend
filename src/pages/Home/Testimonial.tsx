@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination,Navigation } from "swiper/modules";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css/pagination";
 import "swiper/css";
 
@@ -8,40 +8,40 @@ const Testimonial = () => {
         {
             name: "Kevin Martin",
             role: "Customer",
-            image: "https://randomuser.me/api/portraits/men/32.jpg",
-            text: "I Was Very Impressed Lorem posuere in miss drana en the nisan semere scerium amiss etiam ornare in the miss drana is lorem fermen nunt mauris.",
+            image: "https://i.ibb.co/bJdcGkV/model-20.png",
+            text: "I was very impressed with the service. The whole process was seamless and efficient. The car was in excellent condition and met all my expectations.",
             rating: 5,
         },
         {
-            name: "Devid Cullen",
+            name: "David Cullen",
             role: "Customer",
-            image: "https://randomuser.me/api/portraits/men/33.jpg",
-            text: "I Was Very Impressed Lorem posuere in miss drana en the nisan semere scerium amiss etiam ornare in the miss drana is lorem fermen nunt mauris.",
+            image: "https://i.ibb.co/X7msj6h/model-21.png",
+            text: "Great experience! The staff was very friendly, and the vehicle was clean and well-maintained. I will definitely rent from them again.",
             rating: 5,
         },
         {
-            name: "Pitar Has",
+            name: "Peter Hayes",
             role: "Customer",
-            image: "https://randomuser.me/api/portraits/men/34.jpg",
-            text: "I Was Very Impressed Lorem posuere in miss drana en the nisan semere scerium amiss etiam ornare in the miss drana is lorem fermen nunt mauris.",
+            image: "https://i.ibb.co/W3vhbcj/model-22.png",
+            text: "The service exceeded my expectations. The rental process was quick and easy, and the car performed beautifully throughout my trip.",
             rating: 5,
         },
         {
-            name: "Kevin Martin",
+            name: "Linda Adams",
             role: "Customer",
-            image: "https://randomuser.me/api/portraits/men/32.jpg",
-            text: "I Was Very Impressed Lorem posuere in miss drana en the nisan semere scerium amiss etiam ornare in the miss drana is lorem fermen nunt mauris.",
+            image: "https://i.ibb.co/xJ4kPxy/model-23.png",
+            text: "I had a fantastic experience with this company. The car was in top-notch condition, and the customer service was exceptional.",
             rating: 5,
         },
         {
-            name: "Devid Cullen",
+            name: "John Doe",
             role: "Customer",
-            image: "https://randomuser.me/api/portraits/men/33.jpg",
-            text: "I Was Very Impressed Lorem posuere in miss drana en the nisan semere scerium amiss etiam ornare in the miss drana is lorem fermen nunt mauris.",
+            image: "https://i.ibb.co/SxTpYxk/model24.png",
+            text: "Everything went smoothly, from booking to returning the car. The team was very professional, and I highly recommend their service.",
             rating: 5,
         },
     ];
-    
+
     return (
         <div className="custom-container w-full h-screen flex items-center justify-center">
             <div className="h-full w-full relative">
