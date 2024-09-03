@@ -9,7 +9,7 @@ const NavBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const { token } = useAppSelector((state) => state.auth);
 
-    const { data: user } = useGetMeQuery(undefined, {skip: !token});
+    const { data: user } = useGetMeQuery(undefined, { skip: !token });
 
     const location = useLocation();
 
@@ -21,7 +21,6 @@ const NavBar = () => {
         setIsSidebarOpen(false);
     };
 
-    // const {user} = useSelector
     const dispatch = useAppDispatch();
 
     const handleLogOut = () => {
@@ -68,7 +67,7 @@ const NavBar = () => {
                                 to={item.path}
                                 className={`rounded text-base font-medium px-2 py-1 ${
                                     location.pathname === item.path
-                                        ? "bg-red-100 text-red-600 "
+                                        ? "bg-red-100 text-red-600"
                                         : "text-zinc-900"
                                 }`}
                             >
@@ -87,7 +86,10 @@ const NavBar = () => {
                             >
                                 {user?.data?.image ? (
                                     <Space size={48} wrap>
-                                        <Avatar size={48} src={user?.data?.image} />
+                                        <Avatar
+                                            size={48}
+                                            src={user?.data?.image}
+                                        />
                                     </Space>
                                 ) : (
                                     <Space size={16} wrap>
@@ -102,12 +104,14 @@ const NavBar = () => {
                                 )}
                             </Dropdown>
                         ) : (
-                            <div className="lg:block md:block hidden">
+                            <div className="block">
+                                {" "}
+                                {/* Changed from "hidden" to "block" */}
                                 <div className="flex items-center font-medium">
                                     <Link
                                         to="/login"
                                         className="w-full block bg-red-500 hover:bg-red-600 focus:bg-red-500 text-white font-semibold rounded
-                px-4 py-2 duration-300"
+                                            px-4 py-2 duration-300"
                                     >
                                         Login
                                     </Link>
