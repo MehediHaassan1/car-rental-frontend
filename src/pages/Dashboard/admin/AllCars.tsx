@@ -1,20 +1,33 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
     useDeleteCarMutation,
     useGetAllCarsQuery,
 } from "../../../redux/features/car/carApi";
-import { Button, Dropdown, Menu, Table, TableProps, Tag } from "antd";
+import {
+    Button,
+    Dropdown,
+    Menu,
+    Pagination,
+    Table,
+    TableProps,
+    Tag,
+} from "antd";
 import { TAdminCarsData, TCar } from "../../../types";
 import { FaEllipsisV } from "react-icons/fa";
 import Swal from "sweetalert2";
 import CreateCarModal from "./CreateCarModal";
 import UpdateCarModal from "./UpdateCarModal";
-
-
+import { useState } from "react";
 
 const AllCars = () => {
     const [deleteCar] = useDeleteCarMutation();
-    const { data } = useGetAllCarsQuery({ price: 0 });
-    const cars: TCar[] = data?.data;
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(9); // Default page size
+
+    // Fetch cars with pagination parameters
+    const { data, isLoading } = useGetAllCarsQuery({ page, limit: pageSize });
+    const cars: TCar[] = data?.data?.cars;
+    const totalCars = data?.data?.pagination?.totalCars;
 
     const carsData: TAdminCarsData[] = cars?.map(
         ({
@@ -71,8 +84,9 @@ const AllCars = () => {
         },
     ];
 
-    // Define Menu component with items
-    const getMenu = (record: TAdminCarsData) => <Menu items={getMenuItems(record)} />;
+    const getMenu = (record: TAdminCarsData) => (
+        <Menu items={getMenuItems(record)} />
+    );
 
     const columns: TableProps<TAdminCarsData>["columns"] = [
         {
@@ -164,7 +178,7 @@ const AllCars = () => {
                         Swal.fire({
                             title: `${isDeleted ? "Active" : "Delete"}`,
                             text: `Car has been ${
-                                isDeleted ? "Active" : "Delete"
+                                isDeleted ? "activated" : "deleted"
                             }.`,
                             icon: "success",
                             showConfirmButton: false,
@@ -172,17 +186,21 @@ const AllCars = () => {
                         });
                     }
                 } catch (error) {
-                    if (error) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Something went wrong",
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                    }
+                    Swal.fire({
+                        icon: "error",
+                        title: "Something went wrong",
+                        showConfirmButton: false,
+                        timer: 3000,
+                    });
                 }
             }
         });
+    };
+
+    // Pagination handler
+    const handlePageChange = (newPage: number, newPageSize?: number) => {
+        setPage(newPage);
+        if (newPageSize) setPageSize(newPageSize);
     };
 
     return (
@@ -195,8 +213,19 @@ const AllCars = () => {
                 scroll={{ x: "100%" }}
                 columns={columns}
                 dataSource={carsData}
+                pagination={false} // Disable default pagination
+                loading={isLoading}
             />
-            ;
+            <div className="flex justify-center mt-4">
+                <Pagination
+                    current={page}
+                    pageSize={pageSize}
+                    total={totalCars}
+                    onChange={handlePageChange}
+                    showSizeChanger
+                    pageSizeOptions={["6", "9", "15"]}
+                />
+            </div>
         </div>
     );
 };

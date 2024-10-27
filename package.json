@@ -30,6 +30,7 @@
     "react-router-dom": "^6.26.1",
     "react-time-picker": "^7.0.0",
     "react-vertical-timeline-component": "^3.6.0",
+    "recharts": "^2.13.0",
     "redux-persist": "^6.0.0",
     "sweetalert2": "^11.12.4",
     "swiper": "^11.1.10"

@@ -16,7 +16,7 @@ const DashboardLayout = () => {
             </Helmet>
             <div className="max-w-screen-xl mx-auto px-4 md:px-10 lg:px-20 py-5">
                 <div className="grid grid-cols-1 gap-10 md:grid-cols-12 min-h-screen px-0">
-                    <div className="md:col-span-4 lg:col-span-3 bg-primary p-4 lg:p-10 rounded-md text-center min-h-screen text-black bg-red-200">
+                    <div className="md:col-span-4 lg:col-span-3 bg-primary p-4 lg:p-10 rounded-md text-center min-h-screen text-black bg-red-200 ">
                         {user?.data?.image ? (
                             <Space size={64} wrap>
                                 <Avatar size={64} src={user?.data?.image} />

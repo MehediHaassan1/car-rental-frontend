@@ -1,20 +1,26 @@
 import { FaRegUser } from "react-icons/fa6";
-import { useGetAllCarsQuery } from "../../../redux/features/car/carApi";
-import { useGetAllUsersQuery } from "../../../redux/features/user/userApi";
 import { IoCarSportOutline } from "react-icons/io5";
 import { HiOutlineCurrencyDollar } from "react-icons/hi";
 import { useGetAllBookingsQuery } from "../../../redux/features/booking/bookingApi";
 import { TBooking } from "../../../types";
-import { Table, TableProps, Tag } from "antd";
+import { Card, Table, TableProps, Tag } from "antd";
+import { useGetAdminStatsQuery } from "../../../redux/features/statistics/statisticsApi";
+import { Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart } from "recharts"
 
 const AdminDashboard = () => {
-    const { data: cars } = useGetAllCarsQuery({ price: 0 });
-    const { data: users } = useGetAllUsersQuery(undefined);
+    const {
+        data: adminStats,
+        isLoading,
+        error,
+    } = useGetAdminStatsQuery(undefined, {
+        pollingInterval: 30000,
+    });
+
     const { data: bookings } = useGetAllBookingsQuery(undefined);
 
     const completeBookings = bookings?.data?.filter(
         (item: TBooking) => item?.paid && item?.status === "complete"
-    );
+    ).slice(0,3);
 
     const totalRevenue = completeBookings?.reduce(
         (acc: number, item: TBooking) => {
@@ -83,6 +89,21 @@ const AdminDashboard = () => {
         }
     );
 
+    const datas = [
+        {
+            total: "total",
+            users: adminStats?.data?.user,
+            cars: adminStats?.data?.cars,
+            bookings: adminStats?.data?.booking,
+            revenue: totalRevenue,
+        },
+    ];
+
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>Error loading statistics.</p>;
+
+    console.log(adminStats?.data);
+
     return (
         <div className="min-h-screen w-full">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
@@ -97,7 +118,7 @@ const AdminDashboard = () => {
                                 </div>
                                 <div className="flex items-center">
                                     <div className="text-lg text-white font-bold">
-                                        {users?.data?.length}
+                                        {adminStats?.data?.user}
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +140,7 @@ const AdminDashboard = () => {
                                 </div>
                                 <div className="flex items-center">
                                     <div className="text-lg text-white font-bold">
-                                        {cars?.data?.length}
+                                        {adminStats?.data?.cars}
                                     </div>
                                 </div>
                             </div>
@@ -152,8 +173,63 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
+            <Card className="w-full max-w-4xl">
+                <div  className="text-center">
+                    <h1 className="text-3xl">Combined Business Metrics</h1>
+                    <p className="text-lg">
+                        Users, Cars, Bookings, Revenue, and Cumulative Revenue
+                    </p>
+                </div>
+                <div>
+                    <div className="h-[400px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <ComposedChart
+                                data={datas}
+                                margin={{
+                                    top: 20,
+                                    right: 30,
+                                    left: 20,
+                                    bottom: 20,
+                                }}
+                            >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="total" />
+                                <YAxis yAxisId="left" />
+                                <YAxis yAxisId="right" orientation="right" />
+                                <Tooltip />
+                                <Legend />
+                                <Bar
+                                    yAxisId="left"
+                                    dataKey="users"
+                                    fill="red"
+                                    name="Users"
+                                />
+                                <Bar
+                                    yAxisId="left"
+                                    dataKey="cars"
+                                    fill="purple"
+                                    name="Cars"
+                                />
+                                <Bar
+                                    yAxisId="left"
+                                    type="monotone"
+                                    dataKey="bookings"
+                                    fill="gray"
+                                    name="Total Bookings"
+                                />
+                                <Bar
+                                    yAxisId="right"
+                                    type="monotone"
+                                    dataKey="revenue"
+                                    fill="blue"
+                                    name="Monthly Revenue"
+                                />
+                            </ComposedChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+            </Card>
             <Table columns={columns} scroll={{ x: "100%" }} dataSource={data} />
-            ;
         </div>
     );
 };
