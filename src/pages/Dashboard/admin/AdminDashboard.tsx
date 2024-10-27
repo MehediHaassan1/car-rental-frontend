@@ -102,7 +102,6 @@ const AdminDashboard = () => {
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Error loading statistics.</p>;
 
-    console.log(adminStats?.data);
 
     return (
         <div className="min-h-screen w-full">
