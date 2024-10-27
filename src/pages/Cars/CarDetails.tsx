@@ -13,8 +13,8 @@ import { TCar } from "../../types";
 
 const CarDetails = () => {
     const { id } = useParams();
-    const { data } = useGetAllCarsQuery({ price: 0 });
-    const filteredCar: TCar[] = data?.data.filter(
+    const { data } = useGetAllCarsQuery({});
+    const filteredCar: TCar[] = data?.data?.cars?.filter(
         (car: TCar) => car._id !== id
     );
 

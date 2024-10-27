@@ -8,7 +8,7 @@ import { TCar } from "../../types";
 
 const FeaturedCar = () => {
     const { data } = useGetAllCarsQuery({ price: 0 });
-    const featuredCar: TCar[] = data?.data.slice(0, 6);
+    const featuredCar: TCar[] = data?.data?.cars?.slice(0, 6);
 
     return (
         <div className="custom-container w-full min-h-screen my-10">

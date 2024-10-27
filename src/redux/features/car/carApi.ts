@@ -3,23 +3,28 @@ import { baseApi } from "../../api/baseApi";
 const carApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllCars: builder.query({
-      query: ({ carType, price }) => {
-        const params = new URLSearchParams();
-
-        if (carType) {
-          params.append('carType', carType);
-        }
-        if (price > 0) {
-          params.append('price', price);
-        }
-        return {
-          url: '/cars',
-          method: 'GET',
-          params,
-        }
+      query: ({ carType, price, page = 1, limit = 9 }) => {
+          const params = new URLSearchParams();
+  
+          if (carType) {
+              params.append('carType', carType);
+          }
+          if (price > 0) {
+              params.append('price', price.toString());
+          }
+  
+          // Add pagination parameters
+          params.append('page', page.toString());
+          params.append('limit', limit.toString());
+  
+          return {
+              url: `/cars`,
+              method: 'GET',
+              params,
+          };
       },
       providesTags: ['car'],
-    }),
+  }),
 
     getSingleCar: builder.query({
       query: (id) => {

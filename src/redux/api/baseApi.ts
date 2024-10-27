@@ -3,8 +3,11 @@ import { BaseQueryApi, BaseQueryFn, createApi, DefinitionType, FetchArgs, fetchB
 import { RootState } from '../store';
 import { removeUser, setUser } from '../features/auth/authSlice';
 
+// http:localhost:8000
+// https://car-rental-reservation-system-backend.vercel.app
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://car-rental-reservation-system-backend.vercel.app/api",
+  baseUrl: "http://localhost:8000/api",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
@@ -34,7 +37,7 @@ const baseQueryWithReauth: BaseQueryFn<
     if (result?.error?.status === 401) {
       console.log('sending refresh token')
 
-      const res = await fetch('https://car-rental-reservation-system-backend.vercel.app/api/auth/refresh-token ', {
+      const res = await fetch('http://localhost:8000/api/auth/refresh-token ', {
         method: 'POST',
         credentials: 'include',
       });
